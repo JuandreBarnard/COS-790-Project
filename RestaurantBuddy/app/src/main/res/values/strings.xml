@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">RestaurantBuddy</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="facebook_app_id">1714508218772670</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+</resources>
