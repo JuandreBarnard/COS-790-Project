@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -57,22 +58,31 @@ public class MainActivity extends Activity {
             }
         });
 
-        // Standard login
-        final Button loginButton = (Button) findViewById(R.id.login_button);
-        loginButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-               Log.v("INFO", "Login button clicked!");
+        //Register text onTouch
+        final TextView registerText = (TextView) findViewById(R.id.register_view_text);
+        registerText.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                Log.v("INFO", "Register view text clicked!");
+                register_view(view);
+                return false;
             }
         });
-
-        //Register
-//        final Button registerButton = (Button) findViewById(R.id.register_button);
-//        registerButton.setOnClickListener(new View.OnClickListener() {
-//            public void onClick(View v) {
-//                Log.v("INFO", "Register button clicked!");
-//            }
-//        });
     }
+
+    // Login view
+    public void login_view(View view) {
+        Log.v("INFO", "Login view button clicked!");
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+    }
+
+    // Register view
+    public void register_view(View view) {
+        Intent intent = new Intent(this, RegisterActivity.class);
+        startActivity(intent);
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         callbackManager.onActivityResult(requestCode, resultCode, data);
