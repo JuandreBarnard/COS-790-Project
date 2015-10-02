@@ -37,13 +37,46 @@ function registerUser(PDO $db, $user){
         $statement->execute();
 
         if ($statement->rowCount() >= 1) {
-            $data = $statement->rowCount();
-            //get user data and send back in response
-            return new SuccessResponse('User registered.', $data);
+            $userId = $db->lastInsertId();
+            return getUserById($db, $userId);
         }
 
         return new ErrorResponse('User could not be registered.');
     } catch (PDOException $ex) {
         return new ExceptionResponse('PDOException was caught.', $ex);
+    }
+}
+
+function getUserById($db, $user_id){
+    try {
+        $query = '
+            SELECT
+                id,
+                firstname,
+                lastname,
+                displayname,
+                email,
+                type,
+                gcmregid,
+                created,
+                updated
+            FROM
+                users
+            WHERE 
+                id = :id;
+        ';
+
+        $statement = $db->prepare($query);
+        $statement->bindValue(':id', $user_id, PDO::PARAM_INT);
+        $statement->execute();
+
+        if ($statement->rowCount() >= 1) {
+            $data = $statement->fetch(PDO::FETCH_ASSOC);
+            return new SuccessResponse('User exists.', $data);
+        }
+
+        return new ErrorResponse('User does not exist.');
+    } catch (PDOException $ex) {
+        return new ExceptionResponse($ex);
     }
 }
