@@ -17,10 +17,9 @@ public class WelcomeActivity extends ActionBarActivity {
 
         Intent intent = getIntent();
         String username = intent.getStringExtra(LoginActivity.USERNAME);
-        String password = intent.getStringExtra(LoginActivity.PASSWORD);
+
         final TextView result = (TextView) findViewById(R.id.result);
-        String json = "{\" type \": \" SUCCESS \", \"message\": \"Successfully logged in!\", \" data \": { \"username\" " + username + ", \"passowrd\": " + password + " }}";
-        result.setText(json);
+        result.setText(username);
     }
 
     @Override

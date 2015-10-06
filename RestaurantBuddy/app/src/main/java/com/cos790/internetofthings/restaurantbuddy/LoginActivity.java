@@ -11,6 +11,8 @@ import android.widget.EditText;
 
 public class LoginActivity extends ActionBarActivity {
 
+    public final static String USERNAME = "com.cos790.internetofthings.restaurantbuddy.LoginActivity.USERNAME";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -18,8 +20,6 @@ public class LoginActivity extends ActionBarActivity {
     }
 
     // Login
-    public final static String USERNAME = "com.cos790.internetofthings.restaurantbuddy.LoginActivity.USERNAME";
-    public final static String PASSWORD = "com.cos790.internetofthings.restaurantbuddy.LoginActivity.PASSWORD";
     public void login(View view) {
         Log.v("INFO", "Login submit button clicked!");
 
@@ -29,11 +29,20 @@ public class LoginActivity extends ActionBarActivity {
         EditText passwordEditText = (EditText) findViewById(R.id.password);
         String password = passwordEditText.getText().toString();
 
-        Intent intent = new Intent(this, WelcomeActivity.class);
-        intent.putExtra(USERNAME, username);
-        intent.putExtra(PASSWORD, password);
+        Boolean result = authenticate(username, password);
 
-        startActivity(intent);
+        if (result) {
+            Intent intent = new Intent(this, WelcomeActivity.class);
+            intent.putExtra(USERNAME, username);
+            startActivity(intent);
+        }
+    }
+
+    // Authenticate
+    // TODO: post(json)
+    public boolean authenticate(String username, String password) {
+        String json = "{\" type \": \" SUCCESS \", \"message\": \"Successfully logged in!\", \" data \": { \"username\" " + username + ", \"passowrd\": " + password + " }}";
+        return true;
     }
 
     @Override

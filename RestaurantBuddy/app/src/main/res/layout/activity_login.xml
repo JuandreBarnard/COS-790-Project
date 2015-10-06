@@ -40,8 +40,6 @@
         </LinearLayout>
     </RelativeLayout>
 
-
-
     <!-- Footer -->
     <RelativeLayout
         android:id="@+id/footer"
