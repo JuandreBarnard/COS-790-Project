@@ -9,6 +9,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
+import org.json.JSONObject;
+
 public class LoginActivity extends ActionBarActivity {
 
     public final static String USERNAME = "com.cos790.internetofthings.restaurantbuddy.LoginActivity.USERNAME";
@@ -41,7 +43,12 @@ public class LoginActivity extends ActionBarActivity {
     // Authenticate
     // TODO: post(json)
     public boolean authenticate(String username, String password) {
+        JSONObject params = new JSONObject();
         String json = "{\" type \": \" SUCCESS \", \"message\": \"Successfully logged in!\", \" data \": { \"username\" " + username + ", \"passowrd\": " + password + " }}";
+
+        ApplicationRequest ar = new ApplicationRequest();
+        ar.server_request(params);
+
         return true;
     }
 
