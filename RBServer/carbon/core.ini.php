@@ -1,7 +1,6 @@
 <?php
 
 require_once __dir__ . '/config/config.inc.php';
-require_once __dir__ . '/../src/applications/CWebOAuth.client.php';
 
 $config = new Config();
 
