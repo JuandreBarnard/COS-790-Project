@@ -17,11 +17,6 @@ class Config {
      * @var Array An array of email servers that the application uses.
      */
     private $emailServers = NULL;
-
-    /**
-     * @var Array An array of oauth clients that the application uses.
-     */
-    private $oauthClients = NULL;
     
     /**
      * @var Array An array of themes that the site uses. 
@@ -39,12 +34,6 @@ class Config {
      * @var E extends EmailServer EmailServer instance.
      */
     private $defaultEmailServer = NULL;
-    
-    /**
-     * The application's default oauth client.
-     * @var OAuthClient OAuthClient instance.
-     */
-    private $defaultOAuthClient = NULL;
 
     /**
      * The application's default theme.
@@ -103,32 +92,6 @@ class Config {
     public function getEmailServers() {
         return $this->emailServers;
     }
-    
-    /**
-     * Adds a new OAuth client configuration to the application.
-     * @param string $identifier OAuthClient unique identifier.
-     * @param OAuthClient OAuthClient $oauthClient Database instance.
-     */
-    public function addOAuthClient($identifier, OAuthClient $oauthClient) {
-        $this->oauthClients[$identifier] = $oauthClient;
-    }
-
-    /**
-     * Gets an OAuth client by a unique identifier.
-     * @param string $identifier Email server unique identifier.
-     * @return OAuthClient OAuthClient
-     */
-    public function getOAuthClient($identifier) {
-        return $this->oauthClients[$identifier];
-    }
-    
-    /**
-     * Gets all the OAuth clients.
-     * @return OAuthClient OAuthClient
-     */
-    public function getOAuthClients() {
-        return $this->oauthClients;
-    }
 
     /**
      * Adds a new theme configuration to the application.
@@ -186,22 +149,6 @@ class Config {
      */
     public function setDefaultEmailServer($identifier) {
         $this->defaultEmailServer = $this->getEmailServer($identifier);
-    }
-    
-    /**
-     * Gets the default OAuth client.
-     * @return OAuthClient Default OAuth client.
-     */
-    public function getDefaultOAuthClient() {
-        return $this->defaultOAuthClient;
-    }
-    
-    /**
-     * Sets the default application oauth client.
-     * @param string $identifier OAuthClient unique identifier.
-     */
-    public function setDefaultOAuthClient($identifier) {
-        $this->defaultOAuthClient = $this->getOAuthClient($identifier);
     }
     
     /**
