@@ -46,7 +46,7 @@ public class RegisterActivity extends Activity implements OnClickListener {
     Context applicationContext;
     private ProgressDialog pDialog;
     JSONParser jsonParser = new JSONParser();
-    private static final String TAG_SUCCESS = "success";
+    private static final String TAG_SUCCESS = "type";
     private static final String TAG_MESSAGE = "message";
 
     @Override
@@ -152,8 +152,8 @@ public class RegisterActivity extends Activity implements OnClickListener {
 
                 // json success element
 
-                success = json.getString(TAG_MESSAGE);
-                if (!success.equals("User exists.")) {
+                success = json.getString(TAG_SUCCESS);
+                if (!success.equals("SUCCESS")) {
 
                     Log.d("User Created!", json.toString());
                     Intent intent = new Intent(getBaseContext(), WelcomeActivity.class);

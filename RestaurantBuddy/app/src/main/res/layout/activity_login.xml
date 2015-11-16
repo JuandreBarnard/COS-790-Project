@@ -52,7 +52,7 @@
         android:id="@+id/username"
         android:textColor="@color/white"
         android:textColorHint="@color/white"
-        android:hint="@string/username"
+        android:hint="@string/email"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
     <EditText
