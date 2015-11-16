@@ -1,6 +1,11 @@
 <?php
 
 function registerUser(PDO $db, $user){
+    $response = getUserByEmail($db, $user->email);
+    if($response->getType() == Response::SUCCESS){
+        return new ErrorResponse("User already exist.", $user);
+    }
+    
     $query = '  INSERT INTO 
                     users(
                         fullname,
@@ -32,7 +37,14 @@ function registerUser(PDO $db, $user){
 
         if ($statement->rowCount() >= 1) {
             $userId = $db->lastInsertId();
-            return getUserById($db, $userId);
+            $response = getUserById($db, $userId);
+            
+            if($response->getType() == Response::SUCCESS){
+                return new SuccessResponse("User created.", $response->getData());
+            }
+            else{
+                return $response;
+            }
         }
 
         return new ErrorResponse('User could not be registered.');
@@ -93,6 +105,38 @@ function getUserById($db, $user_id){
 
         $statement = $db->prepare($query);
         $statement->bindValue(':id', $user_id, PDO::PARAM_INT);
+        $statement->execute();
+
+        if ($statement->rowCount() >= 1) {
+            $data = $statement->fetch(PDO::FETCH_ASSOC);
+            return new SuccessResponse('User exists.', $data);
+        }
+
+        return new ErrorResponse('User does not exist.');
+    } catch (PDOException $ex) {
+        return new ExceptionResponse($ex);
+    }
+}
+
+function getUserByEmail($db, $user_email){
+    try {
+        $query = '
+            SELECT
+                id,
+                fullname,
+                email,
+                type,
+                gcmregid,
+                created,
+                updated
+            FROM
+                users
+            WHERE 
+                email = :email;
+        ';
+
+        $statement = $db->prepare($query);
+        $statement->bindValue(':email', $user_email, PDO::PARAM_STR);
         $statement->execute();
 
         if ($statement->rowCount() >= 1) {
