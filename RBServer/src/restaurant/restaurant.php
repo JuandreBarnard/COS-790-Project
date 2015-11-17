@@ -69,10 +69,14 @@ function getAllRestaurants($db){
             SELECT
                 restaurant_id,
                 restaurantName,
+                restaurantDescription,
                 restaurantStreet,
                 restaurantCity,
                 restaurantProvince,
-                restaurantCountry
+                restaurantCountry,
+                lattitude,
+                longitude,
+                logo
             FROM
                 restarants;
         ';
