@@ -25,6 +25,7 @@ import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
+import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.common.ConnectionResult;
@@ -38,6 +39,8 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 
@@ -59,12 +62,23 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
         // Facebook login
         FacebookSdk.sdkInitialize(getApplicationContext());
         callbackManager = CallbackManager.Factory.create();
         setContentView(R.layout.activity_main);
 
+        //LoginManager.getInstance().logOut();
+        if (AccessToken.getCurrentAccessToken() != null)
+        {
+            if (AccessToken.getCurrentAccessToken().getExpires().before(Calendar.getInstance().getTime()))
+                LoginManager.getInstance().logOut();
+            //Log.v("ERROR :", "Check if logged in");
+            /**
+             * go on here
+             */
 
+        }
         facebookLoginButton = (LoginButton)findViewById(R.id.facebook_login_button);
         facebookLoginButton.setReadPermissions("public_profile email");
         facebookLoginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
@@ -84,6 +98,7 @@ public class MainActivity extends Activity {
                     RequestData();
                 }
             }
+
 
             @Override
             public void onCancel() {
@@ -105,6 +120,7 @@ public class MainActivity extends Activity {
                 return false;
             }
         });
+        //Log.d("Error :", AccessToken.getCurrentAccessToken().getExpires().toString());
     }
 
     // Login view
@@ -149,12 +165,14 @@ public class MainActivity extends Activity {
 
     private String fullname,email,regID;
     private JSONObject json;
-    public void RequestData(){
+    public void RequestData( ){
         GraphRequest request = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
             @Override
             public void onCompleted(JSONObject object,GraphResponse response) {
 
+
                 json = response.getJSONObject();
+                boolean newValue;
                 try {
                     if(json != null){
                         fullname = json.getString("name");
@@ -163,8 +181,9 @@ public class MainActivity extends Activity {
                         else email = json.getString("email");
 
 
+                        newValue =false;
                         //GCM register
-                        if (checkPlayServices()) {
+                        if (checkPlayServices() && newValue) {
 
                             // Register Device in GCM Server
                             new CreateUser().execute();

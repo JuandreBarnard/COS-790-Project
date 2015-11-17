@@ -129,9 +129,11 @@ public class LoginActivity extends Activity implements OnClickListener {
         // TODO Auto-generated method stub
        /* switch (v.getId()) {
             case R.id.login:*/
-                 username = user.getText().toString();
-                 password = pass.getText().toString();
-                new AttemptLogin().execute();
+        username = user.getText().toString();
+        password = pass.getText().toString();
+
+            new AttemptLogin().execute();
+
                 //break;
             /*case R.id.register:
                 Intent i = new Intent(this, RegisterActivity.class);
@@ -166,6 +168,12 @@ public class LoginActivity extends Activity implements OnClickListener {
             // Check for success tag
             String success;
 
+            if(!Utility.validate(username)) {
+             return "Login Failure! Email format is incorrect";
+            }
+            if(password.equals("")||password.equals(null)) {
+                return "Login Failure! Password is empty";
+            }
             try {
                 // Building Parameters
                 List<NameValuePair> params = new ArrayList<NameValuePair>();

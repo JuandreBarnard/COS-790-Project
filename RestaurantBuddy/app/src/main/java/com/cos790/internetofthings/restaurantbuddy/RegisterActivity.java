@@ -111,9 +111,9 @@ public class RegisterActivity extends Activity implements OnClickListener {
             // TODO Auto-generated method stub
             // Check for success tag
             String success;
-            if(!password_confirm.equals(password)) {
-                Log.d("Login Failure!","Password doesn't match");
-                return "Login Failure! Password doesn't match";// "Creation failed, Password doesn't match";
+            if(!password_confirm.equals(password) || password.equals("")) {
+                Log.d("Register Failure!","Password doesn't match");
+                return "Register Failure! Password doesn't match";// "Creation failed, Password doesn't match";
             }
             if (checkPlayServices()) {
                 try {
