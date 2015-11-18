@@ -1,5 +1,6 @@
 package com.cos790.internetofthings.restaurantbuddy;
 
+import android.app.Activity;
 import android.support.v7.app.ActionBarActivity;
 import android.content.Intent;
 import com.cos790.internetofthings.restaurantbuddy.LoginActivity;
@@ -8,7 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-public class WelcomeActivity extends ActionBarActivity {
+public class WelcomeActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +21,43 @@ public class WelcomeActivity extends ActionBarActivity {
 
         final TextView result = (TextView) findViewById(R.id.result);
         result.setText(username);
+
+        // check if GPS enabled
+        /*GPSTracker gpsTracker = new GPSTracker(this);
+
+        if (gpsTracker.getIsGPSTrackingEnabled())
+        {
+            String stringLatitude = String.valueOf(gpsTracker.latitude);
+            textview = (TextView)findViewById(R.id.fieldLatitude);
+            textview.setText(stringLatitude);
+
+            String stringLongitude = String.valueOf(gpsTracker.longitude);
+            textview = (TextView)findViewById(R.id.fieldLongitude);
+            textview.setText(stringLongitude);
+
+            String country = gpsTracker.getCountryName(this);
+            textview = (TextView)findViewById(R.id.fieldCountry);
+            textview.setText(country);
+
+            String city = gpsTracker.getLocality(this);
+            textview = (TextView)findViewById(R.id.fieldCity);
+            textview.setText(city);
+
+            String postalCode = gpsTracker.getPostalCode(this);
+            textview = (TextView)findViewById(R.id.fieldPostalCode);
+            textview.setText(postalCode);
+
+            String addressLine = gpsTracker.getAddressLine(this);
+            textview = (TextView)findViewById(R.id.fieldAddressLine);
+            textview.setText(addressLine);
+        }
+        else
+        {
+            // can't get location
+            // GPS or Network is not enabled
+            // Ask user to enable GPS/network in settings
+            gpsTracker.showSettingsAlert();
+        }*/
     }
 
     @Override
@@ -43,4 +81,5 @@ public class WelcomeActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
 }

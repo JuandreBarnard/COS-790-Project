@@ -14,4 +14,7 @@
     <string name="title_activity_register">Register</string>
     <string name="title_activity_welcome">Welcome</string>
     <string name="welcome">My Places</string>
+    <string name="GPSAlertDialogTitle">GPS is setting</string>
+    <string name="GPSAlertDialogMessage">GPS is not enabled. Do you want to go to setting menu</string>
+    <string name="cancel">Cancel</string>
 </resources>
