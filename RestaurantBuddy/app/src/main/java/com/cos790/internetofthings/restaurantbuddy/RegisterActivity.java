@@ -111,6 +111,9 @@ public class RegisterActivity extends Activity implements OnClickListener {
             // TODO Auto-generated method stub
             // Check for success tag
             String success;
+            if(!Utility.validate(email)) {
+                return "Register Failure! Email format is incorrect";
+            }
             if(!password_confirm.equals(password) || password.equals("")) {
                 Log.d("Register Failure!","Password doesn't match");
                 return "Register Failure! Password doesn't match";// "Creation failed, Password doesn't match";
@@ -153,7 +156,7 @@ public class RegisterActivity extends Activity implements OnClickListener {
                 // json success element
 
                 success = json.getString(TAG_SUCCESS);
-                if (!success.equals("SUCCESS")) {
+                if (success.equals("SUCCESS")) {
 
                     Log.d("User Created!", json.toString());
                     Intent intent = new Intent(getBaseContext(), WelcomeActivity.class);
