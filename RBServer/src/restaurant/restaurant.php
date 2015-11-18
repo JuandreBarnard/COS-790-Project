@@ -94,3 +94,69 @@ function getAllRestaurants($db){
         return new ExceptionResponse($ex);
     }
 }
+
+function createUserPlace(PDO $db, $user_id, $restaurant_id){
+    $query = '  INSERT INTO 
+                    user_places(
+                        user_id,
+                        restaurant_id
+                    )
+                VALUES(
+                    :user_id,
+                    :restaurant_id
+                )' ;
+
+    try {
+        $statement = $db->prepare($query);
+        $statement->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+        $statement->bindValue(':restaurant_id', $restaurant_id, PDO::PARAM_INT);
+        $statement->execute();
+
+        if ($statement->rowCount() >= 1) {
+            $userId = $db->lastInsertId();
+            $response = getUserById($db, $userId);
+            
+            if($response->getType() == Response::SUCCESS){
+                return new SuccessResponse("User place created.", $response->getData());
+            }
+            else{
+                return $response;
+            }
+        }
+
+        return new ErrorResponse('User place could not be registered.');
+    } catch (PDOException $ex) {
+        return new ExceptionResponse('PDOException was caught.', $ex);
+    }
+}
+
+function deleteUserPlace(PDO $db, $user_id, $restaurant_id){
+    $query = '  DELETE FROM 
+                    user_places
+                WHERE 
+                    user_id = :user_id AND
+                    restaurant_id = :restaurant_id' ;
+
+    try {
+        $statement = $db->prepare($query);
+        $statement->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+        $statement->bindValue(':restaurant_id', $restaurant_id, PDO::PARAM_INT);
+        $statement->execute();
+
+        if ($statement->rowCount() >= 1) {
+            $userId = $db->lastInsertId();
+            $response = getUserById($db, $userId);
+            
+            if($response->getType() == Response::SUCCESS){
+                return new SuccessResponse("User place deleted.", $response->getData());
+            }
+            else{
+                return $response;
+            }
+        }
+
+        return new ErrorResponse('User place could not be deleted.');
+    } catch (PDOException $ex) {
+        return new ExceptionResponse('PDOException was caught.', $ex);
+    }
+}
