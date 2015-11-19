@@ -53,7 +53,7 @@ function getUserPlaces($db, $user){
         $statement->execute();
 
         if ($statement->rowCount() >= 1) {
-            $data = $statement->fetch(PDO::FETCH_ASSOC);
+            $data = $statement->fetchAll(PDO::FETCH_ASSOC);
             return new SuccessResponse('User has restaurants.', $data);
         }
 
@@ -85,7 +85,7 @@ function getAllRestaurants($db){
         $statement->execute();
 
         if ($statement->rowCount() >= 1) {
-            $data = $statement->fetch(PDO::FETCH_ASSOC);
+            $data = $statement->fetchAll(PDO::FETCH_ASSOC);
             return new SuccessResponse('Restaurants exists.', $data);
         }
 
