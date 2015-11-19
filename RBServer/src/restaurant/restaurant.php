@@ -35,14 +35,14 @@ function getUserPlaces($db, $user){
     try {
         $query = '
             SELECT
-                RES.restaurant_id,
+                RES.id,
                 RES.restaurantName,
                 RES.restaurantStreet,
                 RES.restaurantCity,
                 RES.restaurantProvince,
                 RES.restaurantCountry
             FROM
-                restarants AS RES, user_places AS UP
+                restaurants AS RES, user_places AS UP
             WHERE 
                 RES.id = UP.restaurant_id AND
                 UP.user_id = :id;
@@ -67,7 +67,7 @@ function getAllRestaurants($db){
     try {
         $query = '
             SELECT
-                restaurant_id,
+                id,
                 restaurantName,
                 restaurantDescription,
                 restaurantStreet,
@@ -78,7 +78,7 @@ function getAllRestaurants($db){
                 longitude,
                 logo
             FROM
-                restarants;
+                restaurants;
         ';
 
         $statement = $db->prepare($query);

@@ -11,7 +11,7 @@ try{
     $db = $config->getDefaultDatabase()->open();
     
     $user = [
-        'userId' => Request::REQUIRED
+        'id' => Request::REQUIRED
     ];
 
     $request = new StandardRequest();
