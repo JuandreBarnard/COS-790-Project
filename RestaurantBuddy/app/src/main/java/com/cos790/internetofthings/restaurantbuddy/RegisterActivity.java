@@ -38,7 +38,7 @@ import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 public class RegisterActivity extends Activity implements OnClickListener {
 
-    public final static String USERNAME = "com.cos790.internetofthings.restaurantbuddy.RegisterActivity.USERNAME";
+    public final static String ID = "com.cos790.internetofthings.restaurantbuddy.RegisterActivity.ID";
     GoogleCloudMessaging gcmObj;
     private EditText usernameEditText, emailEditText,passwordEditText,passwordConfirmEditText;
     private String username,email,password,password_confirm,regID;
@@ -160,7 +160,7 @@ public class RegisterActivity extends Activity implements OnClickListener {
 
                     Log.d("User Created!", json.toString());
                     Intent intent = new Intent(getBaseContext(), WelcomeActivity.class);
-                    intent.putExtra(USERNAME, username);
+                    intent.putExtra(ID, json.getJSONObject("data").getString("id"));
                     startActivity(intent);
                     finish();
                     return json.getString(TAG_MESSAGE);

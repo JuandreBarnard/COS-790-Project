@@ -96,7 +96,7 @@ public class LoginActivity extends Activity implements OnClickListener {
     }
     */
 
-    public final static String USERNAME = "com.cos790.internetofthings.restaurantbuddy.RegisterActivity.USERNAME";
+    //public final static String USERNAME = "com.cos790.internetofthings.restaurantbuddy.RegisterActivity.USERNAME";
     public final static String ID = "com.cos790.internetofthings.restaurantbuddy.RegisterActivity.ID";
     private ProgressDialog pDialog;
     JSONParser jsonParser = new JSONParser();
