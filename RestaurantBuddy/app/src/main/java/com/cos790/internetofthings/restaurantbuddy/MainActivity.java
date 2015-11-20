@@ -62,7 +62,6 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
         // Facebook login
         FacebookSdk.sdkInitialize(getApplicationContext());
         callbackManager = CallbackManager.Factory.create();
@@ -94,7 +93,6 @@ public class MainActivity extends Activity {
                 Log.v("INFO", message);
 
                 if(AccessToken.getCurrentAccessToken() != null ) {
-
                     RequestData();
                 }
             }
@@ -132,8 +130,11 @@ public class MainActivity extends Activity {
 
     // Register view
     public void register_view(View view) {
-        Intent intent = new Intent(this, RegisterActivity.class);
+        Intent intent = new Intent(this, WelcomeActivity.class);
         startActivity(intent);
+        // TODO: uncomment
+        //Intent intent = new Intent(this, RegisterActivity.class);
+        //startActivity(intent);
     }
 
     @Override
@@ -142,24 +143,16 @@ public class MainActivity extends Activity {
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -170,7 +163,6 @@ public class MainActivity extends Activity {
             @Override
             public void onCompleted(JSONObject object,GraphResponse response) {
 
-
                 json = response.getJSONObject();
                 boolean newValue;
                 try {
@@ -180,12 +172,9 @@ public class MainActivity extends Activity {
                             email = json.getString("id");
                         else email = json.getString("email");
 
-
                         newValue =false;
                         //GCM register
                         if (checkPlayServices() && newValue) {
-
-                            // Register Device in GCM Server
                             new CreateUser().execute();
                         }
 
@@ -226,15 +215,9 @@ public class MainActivity extends Activity {
         checkPlayServices();
     }
 
-    /**
-     * facebook create user
-     *
-     */
+
     class CreateUser extends AsyncTask<String, String, String> {
 
-        /**
-         * Before starting background thread Show Progress Dialog
-         * */
         boolean failure = false;
 
         @Override
@@ -251,7 +234,6 @@ public class MainActivity extends Activity {
 
         @Override
         protected String doInBackground(String... args) {
-            // TODO Auto-generated method stub
             // Check for success tag
             String success;
 
@@ -290,8 +272,6 @@ public class MainActivity extends Activity {
                 // full json response
                 Log.d("Login attempt", json.toString());
 
-                // json success element
-
                 success = json.getString(TAG_SUCCESS);
                 if (!success.equals("SUCCESS")) {
 
@@ -314,11 +294,8 @@ public class MainActivity extends Activity {
             return null;
 
         }
-        /**
-         * After completing background task Dismiss the progress dialog
-         * **/
+
         protected void onPostExecute(String file_url) {
-            // dismiss the dialog once product deleted
             pDialog.dismiss();
             if (file_url != null){
                 Toast.makeText(MainActivity.this, file_url, Toast.LENGTH_LONG).show();

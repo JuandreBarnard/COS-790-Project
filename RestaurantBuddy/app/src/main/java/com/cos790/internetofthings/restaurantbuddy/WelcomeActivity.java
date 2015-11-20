@@ -1,46 +1,27 @@
 package com.cos790.internetofthings.restaurantbuddy;
 
-import android.support.v7.app.ActionBarActivity;
-import android.content.Intent;
-import com.cos790.internetofthings.restaurantbuddy.LoginActivity;
+import android.app.ListActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.TextView;
+import android.util.Log;
+import android.view.View;
+import android.widget.ListView;
 
-public class WelcomeActivity extends ActionBarActivity {
+public class WelcomeActivity extends ListActivity {
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_welcome);
+    public void onCreate(Bundle icicle) {
+        super.onCreate(icicle);
 
-        Intent intent = getIntent();
-        String username = intent.getStringExtra(LoginActivity.USERNAME);
+        Integer[] images = {R.drawable.place_icon_2, R.drawable.place_icon_1, R.drawable.place_icon_2, R.drawable.place_icon_1, R.drawable.place_icon_2, R.drawable.place_icon_1};
+        String[] values = new String[] {"My Place #1", "My Place #2", "My Place #3", "My Place #4", "My Place #5", "My Place #6" };
 
-        final TextView result = (TextView) findViewById(R.id.result);
-        result.setText(username);
+        CustomAdapter adapter = new CustomAdapter(this, values, images);
+        setListAdapter(adapter);
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_welcome, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
+    // Item onclick event
+    protected void onListItemClick(ListView l, View v, int position, long id) {
+        String item = (String) getListAdapter().getItem(position);
+        Log.v("INFO", "Item clicked!" + item);
     }
 }
