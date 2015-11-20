@@ -7,19 +7,18 @@ require_once __DIR__ . '/../../../carbon/formats/formats.inc.php';
 require_once __DIR__ . '/../../../src/restaurant/restaurant.php';
 
 try{
-    // 1. Open DB.
     $db = $config->getDefaultDatabase()->open();
     
-    $user = [
-        'id' => Request::REQUIRED
+    $relUserPlace = [
+        'user_id' => Request::REQUIRED,
+        'restaurant_id' => Request::REQUIRED
     ];
 
     $request = new StandardRequest();
-    $user = $request->extract($user);
-    $user = arrayToJSONObject($user);
+    $relUserPlace = $request->extract($relUserPlace);
+    $relUserPlace = arrayToJSONObject($relUserPlace);
 
-    // 5. Get User Places
-    $response = getUserPlaces($db, $user);
+    $response = deleteUserPlace($db, $relUserPlace->user_id, $relUserPlace->restaurant_id);
 } catch (Exception $ex) {
     $response = new ExceptionResponse($ex);
 }
