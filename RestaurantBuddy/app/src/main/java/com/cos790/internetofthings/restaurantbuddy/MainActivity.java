@@ -102,7 +102,7 @@ public class MainActivity extends Activity {
 
                 if(AccessToken.getCurrentAccessToken() != null ) {
 
-                    RequestData(true);
+                    RequestData();
                 }
             }
 
@@ -172,7 +172,7 @@ public class MainActivity extends Activity {
 
     private String fullname,email,regID;
     private JSONObject json;
-    public void RequestData(final boolean newValue){
+    public void RequestData(){
         GraphRequest request = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
             @Override
             public void onCompleted(JSONObject object,GraphResponse response) {
