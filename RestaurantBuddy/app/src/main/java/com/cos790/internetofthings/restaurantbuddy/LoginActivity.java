@@ -97,6 +97,7 @@ public class LoginActivity extends Activity implements OnClickListener {
     */
 
     public final static String USERNAME = "com.cos790.internetofthings.restaurantbuddy.RegisterActivity.USERNAME";
+    public final static String ID = "com.cos790.internetofthings.restaurantbuddy.RegisterActivity.ID";
     private ProgressDialog pDialog;
     JSONParser jsonParser = new JSONParser();
     private static final String TAG_SUCCESS = "type";
@@ -191,9 +192,10 @@ public class LoginActivity extends Activity implements OnClickListener {
                 // json success tag
                 success = json.getString(TAG_SUCCESS);
                 if (success.equals("SUCCESS")) {
+                    JSONObject data = json.getJSONObject("data");
                     Intent intent = new Intent(getBaseContext(), WelcomeActivity.class);
-                    intent.putExtra(USERNAME, username);
-
+                    intent.putExtra(ID, data.getString("id"));
+                    //intent.putExtra(USERNAME, username);
                     startActivity(intent);
                     Log.d("Login Successful!", json.toString());
                     //Intent i = new Intent(WelcomeActivity.this, ReadComments.class);
