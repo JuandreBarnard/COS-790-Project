@@ -9,7 +9,10 @@ function getRestaurantById($db, $restaurant_id){
                 restaurantStreet,
                 restaurantCity,
                 restaurantProvince,
-                restaurantCountry
+                restaurantCountry,
+                lattitude,
+                longitude,
+                logo
             FROM
                 restarants
             WHERE 
@@ -156,6 +159,75 @@ function deleteUserPlace(PDO $db, $user_id, $restaurant_id){
         }
 
         return new ErrorResponse('User place could not be deleted.');
+    } catch (PDOException $ex) {
+        return new ExceptionResponse('PDOException was caught.', $ex);
+    }
+}
+
+function submitGPS(PDO $db, $deliveryInfo){
+    $query = '  UPDATE
+                    deliveries
+                SET
+                    lattitude = :lattitude,
+                    longitude = :longitude
+                WHERE 
+                    delivery_man_id = :delivery_man_id AND
+                    order_number = :order_number' ;
+
+    try {
+        $statement = $db->prepare($query);
+        $statement->bindValue(':delivery_man_id', $deliveryInfo->delivery_man_id, PDO::PARAM_INT);
+        $statement->bindValue(':order_number', $deliveryInfo->order_number, PDO::PARAM_STR);
+        $statement->bindValue(':lattitude', $deliveryInfo->lattitude, PDO::PARAM_STR);
+        $statement->bindValue(':longitude', $deliveryInfo->longitude, PDO::PARAM_STR);
+        $statement->execute();
+
+        if ($statement->rowCount() >= 1) {
+            $userId = $db->lastInsertId();
+            $response = getUserById($db, $userId);
+            
+            if($response->getType() == Response::SUCCESS){
+                return new SuccessResponse("Delivery updated.", $response->getData());
+            }
+            else{
+                return $response;
+            }
+        }
+
+        return new ErrorResponse('Delivery could not be updated.');
+    } catch (PDOException $ex) {
+        return new ExceptionResponse('PDOException was caught.', $ex);
+    }
+}
+
+function getGPS(PDO $db, $deliveryInfo){
+    $query = '  SELECT 
+                    *
+                FROM
+                    deliveries
+                WHERE 
+                    delivery_man_id = :delivery_man_id AND
+                    order_number = :order_number' ;
+
+    try {
+        $statement = $db->prepare($query);
+        $statement->bindValue(':delivery_man_id', $deliveryInfo->delivery_man_id, PDO::PARAM_INT);
+        $statement->bindValue(':order_number', $deliveryInfo->order_number, PDO::PARAM_STR);
+        $statement->execute();
+
+        if ($statement->rowCount() >= 1) {
+            $userId = $db->lastInsertId();
+            $response = getUserById($db, $userId);
+            
+            if($response->getType() == Response::SUCCESS){
+                return new SuccessResponse("Delivery info could be retrieved.", $response->getData());
+            }
+            else{
+                return $response;
+            }
+        }
+
+        return new ErrorResponse('Delivery info could not be retrieved.');
     } catch (PDOException $ex) {
         return new ExceptionResponse('PDOException was caught.', $ex);
     }
