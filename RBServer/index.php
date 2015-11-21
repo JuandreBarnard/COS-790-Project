@@ -51,8 +51,54 @@
                 <input type="text" class="form-control" id="longitude" placeholder="e.g. 25.000">
             </div>
             <div class="form-group text-center">
-                <button class="btn btn-primary col-xs-6 col-xs-offset-3">submit delivery</button>
+                <button class="btn btn-primary col-xs-6 col-xs-offset-3" style="margin-bottom: 30px">submit delivery</button><br>
             </div>
+        </div>
+        <div class="col-xs-6 col-xs-offset-3">
+            <table class="table table-hover">
+                <tr>
+                    <th>
+                        Delivery Man
+                    </th>
+                    <th>
+                        Delivery Code
+                    </th>
+                    <th>
+                        Location
+                    </th>
+                    <th>
+                        
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        Ruan Botes
+                    </td>
+                    <td>
+                        ab123
+                    </td>
+                    <td>
+                        lat long
+                    </td>
+                    <td>
+                        <button class="btn btn-danger btn-xs">delivered</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Ruan Botes
+                    </td>
+                    <td>
+                        ab345
+                    </td>
+                    <td>
+                        lat long
+                    </td>
+                    <td>
+                        <button class="btn btn-danger btn-xs">delivered</button>
+                    </td>
+                </tr>
+            </table>
         </div>
     </body>
 </html>

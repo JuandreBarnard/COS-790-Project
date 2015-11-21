@@ -25,7 +25,9 @@ function getRestaurantById($db, $restaurant_id){
 
         if ($statement->rowCount() >= 1) {
             $data = $statement->fetch(PDO::FETCH_ASSOC);
-            $data['logo'] = base64_encode($data['logo']);
+            //$data['logo'] = base64_encode($data['logo']);
+            file_put_contents('../../../tmp/' . $data['id'] . '.jpg', $data['logo']);
+            $data['logo'] = $_SERVER['HTTP_HOST'] . '/tmp/' . $data['id'] . '.jpg';
             return new SuccessResponse('Restaurant exists.', $data);
         }
 
