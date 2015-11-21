@@ -6,6 +6,8 @@ require_once __DIR__ . '/../../../carbon/responses/responses.inc.php';
 require_once __DIR__ . '/../../../carbon/formats/formats.inc.php';
 require_once __DIR__ . '/../../../src/restaurant/restaurant.php';
 
+header('Content-Type: text/html; charset=utf-8');
+
 try{
     $db = $config->getDefaultDatabase()->open();
     
