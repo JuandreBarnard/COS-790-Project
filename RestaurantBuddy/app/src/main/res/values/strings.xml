@@ -9,6 +9,7 @@
     <string name="title_activity_login">Login</string>
     <string name="username">Full Name</string>
     <string name="password">Password</string>
+    <string name="add_place">Add place</string>
     <string name="confirm_password">Confirm password</string>
     <string name="email">Email Address</string>
     <string name="title_activity_register">Register</string>
