@@ -4,7 +4,7 @@ function getRestaurantById($db, $restaurant_id){
     try {
         $query = '
             SELECT
-                restaurant_id,
+                id,
                 restaurantName,
                 restaurantStreet,
                 restaurantCity,
@@ -14,7 +14,7 @@ function getRestaurantById($db, $restaurant_id){
                 longitude,
                 logo
             FROM
-                restarants
+                restaurants
             WHERE 
                 id = :id;
         ';
@@ -25,6 +25,7 @@ function getRestaurantById($db, $restaurant_id){
 
         if ($statement->rowCount() >= 1) {
             $data = $statement->fetch(PDO::FETCH_ASSOC);
+            $data['logo'] = base64_encode($data['logo']);
             return new SuccessResponse('Restaurant exists.', $data);
         }
 
