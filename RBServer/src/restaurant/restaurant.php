@@ -63,6 +63,7 @@ function getUserPlaces($db, $user){
 
         if ($statement->rowCount() >= 1) {
             $data = $statement->fetchAll(PDO::FETCH_ASSOC);
+            
             for($i = 0; $i < count($data); $i++){
                 file_put_contents('../../../tmp/' . $data[$i]['id'] . '.jpg', $data[$i]['logo']);
                 $data[$i]['logo'] = $_SERVER['HTTP_HOST'] . '/tmp/' . $data[$i]['id'] . '.jpg';
