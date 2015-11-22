@@ -4,30 +4,21 @@ import android.app.Activity;
 import android.content.Intent;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
-import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -39,13 +30,13 @@ public class WelcomeActivity extends Activity {
     private CustomAdapter adapter;
     private ListView list;
     JSONParser jsonParser = new JSONParser();
+    private JSONArray data;
     private static final String TAG_SUCCESS = "type";
     private static final String TAG_MESSAGE = "message";
     private String ID;
-    public final static String ITEM_ID = "com.cos790.internetofthings.restaurantbuddy.WelcomeActivity.ITEM_ID";
-    public final static String ACTIVITY_NAME = "com.cos790.internetofthings.restaurantbuddy.WelcomeActivity.ACTIVITY_NAME";
+    public final static String SELECTED_RESTAURANT = "com.cos790.internetofthings.restaurantbuddy.WelcomeActivity.SELECTED_RESTAURANT";
 
-  @Override
+    @Override
   protected void onCreate(Bundle state) {
       super.onCreate(state);
       setContentView(R.layout.activity_welcome);
@@ -81,12 +72,13 @@ public class WelcomeActivity extends Activity {
 
             try {
                 // Building Parameters
-                List<NameValuePair> params = new ArrayList<NameValuePair>();
-                //params.add(new BasicNameValuePair("userId", ID));
+                List<NameValuePair> params = new ArrayList<>();
+                params.add(new BasicNameValuePair("id", ID));
 
                 Log.d("request!", "starting");
                 // getting product details by making HTTP request
 
+                // TODO: change back to user_places
                 JSONObject json = jsonParser.makeHttpRequest(
                         ApplicationConstants.APP_SERVER_all_restaurant, "POST", params);
 
@@ -104,7 +96,8 @@ public class WelcomeActivity extends Activity {
                     //Intent i = new Intent(WelcomeActivity.this, ReadComments.class);
                     finish();*/
                     //startActivity(i);
-                    JSONArray data = json.getJSONArray("data");
+                    data = json.getJSONArray("data");
+                    List<String> ids = new LinkedList<>();
                     List<String> images = new LinkedList<>();
                     List<String> values = new LinkedList<>();
                     for(int i=0;i<data.length();i++)
@@ -113,6 +106,8 @@ public class WelcomeActivity extends Activity {
                         JSONObject b = data.getJSONObject(i);
 
                         //byte[] object = (byte[]) b.get("logo");
+
+                        ids.add(b.getString("id"));
 
                         images.add(b.getString("logo"));
 
@@ -124,9 +119,10 @@ public class WelcomeActivity extends Activity {
                         Log.i(".......",latitude);*/
                     }
                     //listofurls = image_urls.toArray(new String[image_urls.size()]);
+                    String[] id = ids.toArray(new String[ids.size()]);
                     String[] a =  values.toArray(new String[values.size()]);
                     String[] img =  images.toArray(new String[images.size()]);
-                    adapter = new CustomAdapter(applicationContext, a, img);
+                    adapter = new CustomAdapter(applicationContext, id, a, img);
 
                     return json.getString(TAG_SUCCESS);
                 } else {
@@ -158,9 +154,26 @@ public class WelcomeActivity extends Activity {
             // List item onclick
             list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Log.v("INFO", "List item clicked! At: " + position);
-                    details_view(position);
+                public void onItemClick(AdapterView<?> parent, View view, int position, long arg) {
+                    String id = ((TextView) view.findViewById(R.id.id)).getText().toString();
+                    JSONObject selected_restaurant = null;
+
+                    try {
+                        for (int i = 0; i < data.length(); i++) {
+
+                            JSONObject b = data.getJSONObject(i);
+                            if (b.getString("id").equals(id)) {
+                                selected_restaurant = b;
+                                break;
+                            }
+                        }
+                    } catch (Exception e) {
+                        Log.v("ERROR", e.toString());
+                    }
+
+                    Log.v("INFO", "Selected restaurant: " + selected_restaurant.toString());
+                    details_view(selected_restaurant);
+
                 }
             });
         }
@@ -175,9 +188,9 @@ public class WelcomeActivity extends Activity {
     }
 
     // Details activity
-    public void details_view(int restaurant_id) {
-        Intent intent = new Intent(this, DetailsActivity.class);
-        intent.putExtra(ITEM_ID, restaurant_id);
+    public void details_view(JSONObject selected_item) {
+        Intent intent = new Intent(this, DetailsActivity2.class);
+        intent.putExtra(SELECTED_RESTAURANT, selected_item.toString());
         intent.putExtra(LoginActivity.ID, ID);
         startActivity(intent);
     }

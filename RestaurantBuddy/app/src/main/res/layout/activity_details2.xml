@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/brown"
-    tools:context="com.cos790.internetofthings.restaurantbuddy.DetailsActivity">
+    tools:context="com.cos790.internetofthings.restaurantbuddy.DetailsActivity2">
 
     <!-- Header -->
     <RelativeLayout
@@ -44,9 +44,9 @@
         android:paddingRight="0dp"
         android:gravity="center">
 
-        <!-- Add place -->
+        <!-- Track delivery -->
         <LinearLayout
-            android:id="@+id/add_place_view"
+            android:id="@+id/track_delivery_view"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:textSize="20sp"
@@ -55,16 +55,40 @@
             android:layout_margin="10dp"
             android:padding="0dp">
             <Button
-                android:id="@+id/add_place_button"
+                android:id="@+id/track_delivery_button"
                 android:layout_width="fill_parent"
                 android:layout_height="60dp"
                 android:textSize="20sp"
                 android:textColor="@color/white"
-                android:text="@string/add"
+                android:text="@string/track_delivery"
                 android:layout_weight="0.7"
                 android:background="@drawable/bg_button_rounded"
-                android:onClick="add_place"/>
+                android:onClick="track_delivery"/>
         </LinearLayout>
+
+        <!-- Delete -->
+        <LinearLayout
+            android:id="@+id/delete_place_view"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/track_delivery_view"
+            android:textSize="20sp"
+            android:gravity = "center_horizontal"
+            android:weightSum="1.0"
+            android:layout_margin="10dp"
+            android:padding="0dp">
+            <Button
+                android:id="@+id/delete_place_button"
+                android:layout_width="fill_parent"
+                android:layout_height="60dp"
+                android:textSize="20sp"
+                android:textColor="@color/white"
+                android:text="@string/delete"
+                android:layout_weight="0.7"
+                android:background="@drawable/bg_button_rounded"
+                android:onClick="delete"/>
+        </LinearLayout>
+
     </RelativeLayout>
 
 </RelativeLayout>

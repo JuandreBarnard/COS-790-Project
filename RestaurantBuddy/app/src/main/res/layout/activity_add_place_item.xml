@@ -7,10 +7,19 @@
     android:gravity="left"
     android:padding="5pt">
 
+    <TextView
+        android:id="@+id/id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@+id/id"
+        android:textColor="@color/light_yellowish"
+        android:textSize="20sp" >
+    </TextView>
+
     <ImageView
         android:id="@+id/icon"
-        android:layout_width="45px"
-        android:layout_height="45px"
+        android:layout_width="70px"
+        android:layout_height="70px"
         android:layout_marginLeft="4px"
         android:layout_marginRight="10px"
         android:layout_marginTop="4px">

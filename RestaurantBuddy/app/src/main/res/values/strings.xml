@@ -17,10 +17,18 @@
     <string name="my_places">My Places</string>
     <string name="add_places">Add Places</string>
     <string name="add">Add</string>
+    <string name="delete">Delete</string>
+    <string name="track_delivery">Track Delivery</string>
+    <string name="track">Track</string>
+    <string name="order_number">Order Number e.g 008</string>
+    <string name="current_location">Current location</string>
     <string name="GPSAlertDialogTitle">GPS is setting</string>
     <string name="GPSAlertDialogMessage">GPS is not enabled. Do you want to go to setting menu</string>
     <string name="cancel">Cancel</string>
     <string name="title_activity_add_place">AddPlaceActivity</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_details">DetailsActivity</string>
+    <string name="title_activity_details2">DetailsActivity2</string>
+    <string name="title_activity_track_delivery">TrackDelivery</string>
+    <string name="title_activity_gps">GPSActivity</string>
 </resources>

@@ -73,7 +73,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 
             new AttemptLogin().execute();
 
-                //break;
+            //break;
             /*case R.id.register:
                 Intent i = new Intent(this, RegisterActivity.class);
                 startActivity(i);
