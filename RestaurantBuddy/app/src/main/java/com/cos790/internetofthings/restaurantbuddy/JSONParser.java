@@ -29,7 +29,9 @@ public class JSONParser {
 
     // constructor
     public JSONParser() {
-
+        is = null;
+        jObj = null;
+        json = null;
     }
 
     // function get json from url
