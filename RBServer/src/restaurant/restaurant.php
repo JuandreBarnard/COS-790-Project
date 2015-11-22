@@ -120,6 +120,7 @@ function createUserPlace(PDO $db, $user_id, $restaurant_id){
 
         if ($statement->rowCount() >= 1) {
             $userId = $db->lastInsertId();
+            require_once __DIR__ . '/../account/account.php';
             $response = getUserById($db, $userId);
             
             if($response->getType() == Response::SUCCESS){
