@@ -46,7 +46,10 @@ function getUserPlaces($db, $user){
                 RES.restaurantStreet,
                 RES.restaurantCity,
                 RES.restaurantProvince,
-                RES.restaurantCountry
+                RES.restaurantCountry,
+                RES.lattitude,
+                RES.longitude,
+                RES.logo
             FROM
                 restaurants AS RES, user_places AS UP
             WHERE 
@@ -60,6 +63,11 @@ function getUserPlaces($db, $user){
 
         if ($statement->rowCount() >= 1) {
             $data = $statement->fetchAll(PDO::FETCH_ASSOC);
+            for($i = 0; $i < count($data); $i++){
+                file_put_contents('../../../tmp/' . $data[$i]['id'] . '.jpg', $data[$i]['logo']);
+                $data[$i]['logo'] = $_SERVER['HTTP_HOST'] . '/tmp/' . $data[$i]['id'] . '.jpg';
+            }
+            
             return new SuccessResponse('User has restaurants.', $data);
         }
 
@@ -102,6 +110,10 @@ function getAllRestaurants($db, $user){
 
         if ($statement->rowCount() >= 1) {
             $data = $statement->fetchAll(PDO::FETCH_ASSOC);
+            for($i = 0; $i < count($data); $i++){
+                file_put_contents('../../../tmp/' . $data[$i]['id'] . '.jpg', $data[$i]['logo']);
+                $data[$i]['logo'] = $_SERVER['HTTP_HOST'] . '/tmp/' . $data[$i]['id'] . '.jpg';
+            }
             return new SuccessResponse('Restaurants exists.', $data);
         }
 
