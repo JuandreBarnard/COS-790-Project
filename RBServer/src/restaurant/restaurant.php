@@ -172,15 +172,7 @@ function deleteUserPlace(PDO $db, $user_id, $restaurant_id){
         $statement->execute();
 
         if ($statement->rowCount() >= 1) {
-            $userId = $db->lastInsertId();
-            $response = getUserById($db, $userId);
-            
-            if($response->getType() == Response::SUCCESS){
-                return new SuccessResponse("User place deleted.", $response->getData());
-            }
-            else{
-                return $response;
-            }
+            return new SuccessResponse("User place deleted.");
         }
 
         return new ErrorResponse('User place could not be deleted.');
