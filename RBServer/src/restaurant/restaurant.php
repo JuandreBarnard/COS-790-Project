@@ -102,6 +102,13 @@ function getAllRestaurants($db){
 }
 
 function createUserPlace(PDO $db, $user_id, $restaurant_id){
+    require_once __DIR__ . '/../account/account.php';
+    $response = getUserById($db, $user_id);
+    
+    if($response->getType() != Response::SUCCESS){
+        return new ErrorResponse("User does not exist.");
+    }
+    
     $query = '  INSERT INTO 
                     user_places(
                         user_id,
@@ -119,16 +126,7 @@ function createUserPlace(PDO $db, $user_id, $restaurant_id){
         $statement->execute();
 
         if ($statement->rowCount() >= 1) {
-            $userId = $db->lastInsertId();
-            require_once __DIR__ . '/../account/account.php';
-            $response = getUserById($db, $userId);
-            
-            if($response->getType() == Response::SUCCESS){
-                return new SuccessResponse("User place created.", $response->getData());
-            }
-            else{
-                return $response;
-            }
+            return new SuccessResponse("User place created.", $response->getData());
         }
 
         return new ErrorResponse('User place could not be registered.');
