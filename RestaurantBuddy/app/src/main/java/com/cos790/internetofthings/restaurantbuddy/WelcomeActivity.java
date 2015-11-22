@@ -127,8 +127,10 @@ public class WelcomeActivity extends Activity {
                         String latitude = b.getString("lattitude");
                         Log.i(".......",latitude);*/
                     }
-
-                    adapter = new CustomAdapter(applicationContext,(String[]) values.toArray(), (String[]) images.toArray());
+                    //listofurls = image_urls.toArray(new String[image_urls.size()]);
+                    String[] a =  values.toArray(new String[values.size()]);
+                    String[] img =  images.toArray(new String[images.size()]);
+                    adapter = new CustomAdapter(applicationContext, a, img);
 
                     return json.getString(TAG_SUCCESS);
                 } else {
