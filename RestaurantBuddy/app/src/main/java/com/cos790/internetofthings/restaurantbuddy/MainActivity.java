@@ -288,11 +288,21 @@ public class MainActivity extends Activity {
                 // json success tag
                 success = json.getString(TAG_SUCCESS);
                 if (success.equals("SUCCESS")) {
+
                     JSONObject data = json.getJSONObject("data");
-                    Intent intent = new Intent(getBaseContext(), WelcomeActivity.class);
-                    intent.putExtra(ID, data.getString("id"));
-                    //intent.putExtra(USERNAME, username);
-                    startActivity(intent);
+                    if(data.getString("type").equals("3")) {
+                        Intent intent = new Intent(getBaseContext(), Delivery_man.class);
+                        intent.putExtra(ID, data.getString("id"));
+                        //intent.putExtra(USERNAME, username);
+                        startActivity(intent);
+                        finish();
+                    }
+                    else {
+                        Intent intent = new Intent(getBaseContext(), WelcomeActivity.class);
+                        intent.putExtra(ID, data.getString("id"));
+                        //intent.putExtra(USERNAME, username);
+                        startActivity(intent);
+                    }
                     Log.d("Login Successful!", json.toString());
                     //Intent i = new Intent(WelcomeActivity.this, ReadComments.class);
                     finish();
@@ -346,11 +356,20 @@ public class MainActivity extends Activity {
                 if (success.equals("SUCCESS")) {
 
                     Log.d("User Created!", json.toString());
-                    Intent intent = new Intent(getBaseContext(), WelcomeActivity.class);
+                    JSONObject data = json.getJSONObject("data");
+                    if(data.getString("type").equals("3")) {
+                        Intent intent = new Intent(getBaseContext(), Delivery_man.class);
+                        intent.putExtra(ID, data.getString("id"));
+                        //intent.putExtra(USERNAME, username);
+                        startActivity(intent);
+                        finish();
+                    }
+                    else {
+                        Intent intent = new Intent(getBaseContext(), WelcomeActivity.class);
 
-                    intent.putExtra(ID, json.getJSONObject("data").getString("id"));
-                    startActivity(intent);
-                    finish();
+                        intent.putExtra(ID, json.getJSONObject("data").getString("id"));
+                        startActivity(intent);
+                    }
                     return json.getString(TAG_MESSAGE);
                 }else{
                     Log.d("Creation Failure!", json.getString(TAG_MESSAGE));

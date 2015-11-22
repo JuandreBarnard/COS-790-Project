@@ -80,7 +80,7 @@ public class WelcomeActivity extends Activity {
 
                 // TODO: change back to user_places
                 JSONObject json = jsonParser.makeHttpRequest(
-                        ApplicationConstants.APP_SERVER_all_restaurant, "POST", params);
+                        ApplicationConstants.APP_SERVER_user_places, "POST", params);
 
                 // check your log for json response
                 Log.d("List attempt", json.toString());

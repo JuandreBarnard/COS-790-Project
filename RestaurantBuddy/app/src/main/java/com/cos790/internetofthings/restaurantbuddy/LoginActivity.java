@@ -136,6 +136,7 @@ public class LoginActivity extends Activity implements OnClickListener {
                         intent.putExtra(ID, data.getString("id"));
                         //intent.putExtra(USERNAME, username);
                         startActivity(intent);
+                        finish();
                     }
                     else
                     {
@@ -143,6 +144,7 @@ public class LoginActivity extends Activity implements OnClickListener {
                         intent.putExtra(ID, data.getString("id"));
                         //intent.putExtra(USERNAME, username);
                         startActivity(intent);
+                        finish();
                     }
                     Log.d("Login Successful!", json.toString());
                     //Intent i = new Intent(WelcomeActivity.this, ReadComments.class);

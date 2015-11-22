@@ -74,7 +74,7 @@ public class AddPlaceActivity extends ActionBarActivity {
             try {
                 // Building Parameters
                 List<NameValuePair> params = new ArrayList<>();
-                params.add(new BasicNameValuePair("id", ID));
+                params.add(new BasicNameValuePair("user_id", ID));
 
                 Log.d("request!", "starting");
                 // getting product details by making HTTP request
@@ -187,6 +187,7 @@ public class AddPlaceActivity extends ActionBarActivity {
         intent.putExtra(SELECTED_RESTAURANT, selected_item.toString());
         intent.putExtra(LoginActivity.ID, ID);
         startActivity(intent);
+        finish();
     }
 
 }
