@@ -48,6 +48,12 @@ public class AddPlaceActivity extends ActionBarActivity {
         list = (ListView) findViewById(R.id.list);
         new AttemptRestSearch().execute();
     }
+    public void onRestart() {
+        super.onRestart();
+        //Refresh your stuff here
+        list = (ListView) findViewById(R.id.list);
+        new AttemptRestSearch().execute();
+    }
 
     class AttemptRestSearch extends AsyncTask<String, String, String> {
         /**
@@ -187,7 +193,7 @@ public class AddPlaceActivity extends ActionBarActivity {
         intent.putExtra(SELECTED_RESTAURANT, selected_item.toString());
         intent.putExtra(LoginActivity.ID, ID);
         startActivity(intent);
-        finish();
+
     }
 
 }

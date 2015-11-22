@@ -47,6 +47,13 @@ public class WelcomeActivity extends Activity {
       list = (ListView) findViewById(R.id.list);
       new AttemptRestSearch().execute();
   }
+    @Override
+    public void onRestart() {
+        super.onRestart();
+        //Refresh your stuff here
+        list = (ListView) findViewById(R.id.list);
+        new AttemptRestSearch().execute();
+    }
 
   class AttemptRestSearch extends AsyncTask<String, String, String> {
       /**
@@ -144,7 +151,7 @@ public class WelcomeActivity extends Activity {
         protected void onPostExecute(String file_url) {
             // Dismiss the dialog once product deleted
             pDialog.dismiss();
-            if (file_url != null) {
+            if (file_url != null||file_url.equals("SUCCESS")) {
                 Toast.makeText(WelcomeActivity.this, file_url, Toast.LENGTH_LONG).show();
             }
             if(adapter != null) {
@@ -185,6 +192,7 @@ public class WelcomeActivity extends Activity {
         Intent intent = new Intent(this, AddPlaceActivity.class);
         intent.putExtra(LoginActivity.ID, ID);
         startActivity(intent);
+
     }
 
     // Details activity
