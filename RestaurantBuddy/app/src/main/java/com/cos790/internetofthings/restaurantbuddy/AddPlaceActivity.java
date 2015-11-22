@@ -132,7 +132,7 @@ public class AddPlaceActivity extends ActionBarActivity {
 
                     adapter = new CustomAdapter(applicationContext, id, a, img);
 
-                    return json.getString(TAG_SUCCESS);
+
                 } else {
                     Log.d("Login Failure!", json.getString(TAG_MESSAGE));
                     return json.getString(TAG_MESSAGE);

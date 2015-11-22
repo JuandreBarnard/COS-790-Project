@@ -131,7 +131,7 @@ public class WelcomeActivity extends Activity {
                     String[] img =  images.toArray(new String[images.size()]);
                     adapter = new CustomAdapter(applicationContext, id, a, img);
 
-                    return json.getString(TAG_SUCCESS);
+                    //return null;
                 } else {
                     Log.d("Login Failure!", json.getString(TAG_MESSAGE));
                     return json.getString(TAG_MESSAGE);
@@ -151,7 +151,7 @@ public class WelcomeActivity extends Activity {
         protected void onPostExecute(String file_url) {
             // Dismiss the dialog once product deleted
             pDialog.dismiss();
-            if (file_url != null||file_url.equals("SUCCESS")) {
+            if (file_url != null) {
                 Toast.makeText(WelcomeActivity.this, file_url, Toast.LENGTH_LONG).show();
             }
             if(adapter != null) {

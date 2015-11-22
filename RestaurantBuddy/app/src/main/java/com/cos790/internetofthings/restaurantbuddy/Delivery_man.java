@@ -40,9 +40,9 @@ public class Delivery_man extends Activity implements GooglePlayServicesClient.C
         setContentView(R.layout.activity_delivery_man);
 
 
-        //txtConnectionStatus = (TextView) findViewById(R.id.txtConnectionStatus);
+        txtConnectionStatus = (TextView) findViewById(R.id.txtConnectionStatus);
         txtLastKnownLoc = (TextView) findViewById(R.id.txtLastKnownLoc);
-       // etLocationInterval = (EditText) findViewById(R.id.etLocationInterval);
+        etLocationInterval = (EditText) findViewById(R.id.etLocationInterval);
         txtLocationRequest = (TextView) findViewById(R.id.txtLocationRequest);
 
         mIntentService = new Intent(this,LocationService.class);
@@ -61,7 +61,7 @@ public class Delivery_man extends Activity implements GooglePlayServicesClient.C
     }
 
     public void buttonClicked(View v){
-       /* if(v.getId() == R.id.btnLastLoc){
+        if(v.getId() == R.id.btnLastLoc){
             if(locationclient!=null && locationclient.isConnected()){
                 Location loc =locationclient.getLastLocation();
                 Log.i(TAG, "Last Known Location :" + loc.getLatitude() + "," + loc.getLongitude());
@@ -83,12 +83,12 @@ public class Delivery_man extends Activity implements GooglePlayServicesClient.C
                 }
 
             }
-        }*/
+        }
         if(v.getId() == R.id.btnRequestLocationIntent){
             if(((Button)v).getText().equals("Start")){
 
                 locationrequest = LocationRequest.create();
-                locationrequest.setInterval(1000);
+                locationrequest.setInterval(100);
                 locationclient.requestLocationUpdates(locationrequest, mPendingIntent);
 
                 ((Button) v).setText("Stop");
