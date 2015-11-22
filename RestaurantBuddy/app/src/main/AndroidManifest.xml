@@ -2,12 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.cos790.internetofthings.restaurantbuddy"
     android:versionCode="1"
-    android:versionName="1.0"
-    >
+    android:versionName="1.0" >
+
     <uses-sdk
         android:minSdkVersion="9"
         android:targetSdkVersion="19" />
-
 
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
@@ -22,10 +21,13 @@
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
-    <!-- GCM Permissions - End here  -->
+    <!-- GCM Permissions - End here -->
     <uses-permission android:name="android.permission.VIBRATE" />
-
     <uses-permission android:name="android.permission.INTERNET" />
+
+    <android:uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <android:uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <android:uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -35,7 +37,9 @@
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
-        <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version" />
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
 
         <activity
             android:name=".MainActivity"
@@ -54,7 +58,6 @@
         <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_login"
-
             android:parentActivityName=".MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -63,8 +66,8 @@
         <activity
             android:name=".RegisterActivity"
             android:label="@string/title_activity_register"
-            android:windowSoftInputMode="stateVisible|adjustResize"
-            android:parentActivityName=".MainActivity" >
+            android:parentActivityName=".MainActivity"
+            android:windowSoftInputMode="stateVisible|adjustResize" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.cos790.internetofthings.restaurantbuddy.MainActivity" />
@@ -76,6 +79,14 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.cos790.internetofthings.restaurantbuddy.LoginActivity" />
+        </activity>
+        <activity
+            android:name=".AddPlaceActivity"
+            android:label="@string/title_activity_add_place" >
+        </activity>
+        <activity
+            android:name=".DetailsActivity"
+            android:label="@string/title_activity_details" >
         </activity>
     </application>
 

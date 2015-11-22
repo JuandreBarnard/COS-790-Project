@@ -28,24 +28,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:text="@string/my_places"
+                android:text="Place Name"
                 android:textColor="#000"
                 android:textSize="30sp"/>
         </LinearLayout>
     </RelativeLayout>
 
-    <ListView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/list"
-        android:layout_below="@+id/header"
-        android:layout_above="@+id/add_place"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
     <!-- Footer -->
     <RelativeLayout
-        android:id="@+id/add_place"
+        android:id="@+id/footer"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -53,6 +44,7 @@
         android:paddingRight="0dp"
         android:gravity="center">
 
+        <!-- Add place -->
         <LinearLayout
             android:id="@+id/add_place_view"
             android:layout_width="fill_parent"
@@ -68,11 +60,14 @@
                 android:layout_height="60dp"
                 android:textSize="20sp"
                 android:textColor="@color/white"
-                android:text="@string/add_place"
+                android:text="@string/add"
                 android:layout_weight="0.7"
-                android:onClick="add_place_view"
-                android:background="@drawable/bg_button_rounded"/>
+                android:background="@drawable/bg_button_rounded"
+                android:onClick="add_place"/>
         </LinearLayout>
     </RelativeLayout>
+
+
+
 
 </RelativeLayout>

@@ -1,6 +1,13 @@
 package com.cos790.internetofthings.restaurantbuddy;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -11,6 +18,7 @@ import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -34,35 +42,25 @@ public class WelcomeActivity extends Activity {
     private static final String TAG_SUCCESS = "type";
     private static final String TAG_MESSAGE = "message";
     private String ID;
-    @Override
-    protected void onCreate(Bundle state) {
-        super.onCreate(state);
-        setContentView(R.layout.activity_welcome);
-        Intent intent = getIntent();
-        ID = intent.getStringExtra(LoginActivity.ID);
+    public final static String ITEM_ID = "com.cos790.internetofthings.restaurantbuddy.WelcomeActivity.ITEM_ID";
+    public final static String ACTIVITY_NAME = "com.cos790.internetofthings.restaurantbuddy.WelcomeActivity.ACTIVITY_NAME";
 
-        //Integer[] images = {R.drawable.place_icon_2, R.drawable.place_icon_1, R.drawable.place_icon_2, R.drawable.place_icon_1, R.drawable.place_icon_2, R.drawable.place_icon_1, R.drawable.place_icon_2, R.drawable.place_icon_1, R.drawable.place_icon_2, R.drawable.place_icon_1};
-        //String[] values = new String[] {"My Place #1", "My Place #2", "My Place #3", "My Place #4", "My Place #5", "My Place #6", "My Place #7", "My Place #8", "My Place #9", "My Place #10" };
-        applicationContext = getApplicationContext();
-        list = (ListView) findViewById(R.id.list);
-        new AttemptRestSearch().execute();
+  @Override
+  protected void onCreate(Bundle state) {
+      super.onCreate(state);
+      setContentView(R.layout.activity_welcome);
+      Intent intent = getIntent();
+      ID = intent.getStringExtra(LoginActivity.ID);
 
+      applicationContext = getApplicationContext();
+      list = (ListView) findViewById(R.id.list);
+      new AttemptRestSearch().execute();
+  }
 
-
-
-    }
-
-    //Add place onclick
-    public void add_place(View view) {
-        Log.v("INFO", "Add place button clicked!");
-        // Intent intent = new Intent(this, LoginActivity.class);
-        // startActivity(intent);
-    }
-    class AttemptRestSearch extends AsyncTask<String, String, String> {
-
-        /**
-         * Before starting background thread Show Progress Dialog
-         */
+  class AttemptRestSearch extends AsyncTask<String, String, String> {
+      /**
+       * Before starting background thread Show Progress Dialog
+       */
         boolean failure = false;
 
         @Override
@@ -80,7 +78,6 @@ public class WelcomeActivity extends Activity {
             // TODO Auto-generated method stub
             // Check for success tag
             String success;
-
 
             try {
                 // Building Parameters
@@ -114,7 +111,6 @@ public class WelcomeActivity extends Activity {
                     {
 
                         JSONObject b = data.getJSONObject(i);
-
 
                         //byte[] object = (byte[]) b.get("logo");
 
@@ -150,13 +146,40 @@ public class WelcomeActivity extends Activity {
          * After completing background task Dismiss the progress dialog
          **/
         protected void onPostExecute(String file_url) {
-            // dismiss the dialog once product deleted
+            // Dismiss the dialog once product deleted
             pDialog.dismiss();
             if (file_url != null) {
                 Toast.makeText(WelcomeActivity.this, file_url, Toast.LENGTH_LONG).show();
             }
-            if(adapter != null)
+            if(adapter != null) {
                 list.setAdapter(adapter);
+            }
+
+            // List item onclick
+            list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Log.v("INFO", "List item clicked! At: " + position);
+                    details_view(position);
+                }
+            });
         }
     }
+
+    //Add place activity
+    public void add_place_view(View view) {
+        Log.v("INFO", "Add place button clicked!");
+        Intent intent = new Intent(this, AddPlaceActivity.class);
+        intent.putExtra(LoginActivity.ID, ID);
+        startActivity(intent);
+    }
+
+    // Details activity
+    public void details_view(int restaurant_id) {
+        Intent intent = new Intent(this, DetailsActivity.class);
+        intent.putExtra(ITEM_ID, restaurant_id);
+        intent.putExtra(LoginActivity.ID, ID);
+        startActivity(intent);
+    }
+    
 }
