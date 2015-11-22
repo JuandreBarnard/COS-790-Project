@@ -69,7 +69,7 @@ function getUserPlaces($db, $user){
     }
 }
 
-function getAllRestaurants($db){
+function getAllRestaurants($db, $user){
     try {
         $query = '
             SELECT
@@ -84,10 +84,20 @@ function getAllRestaurants($db){
                 longitude,
                 logo
             FROM
-                restaurants;
+                restaurants
+            WHERE 
+                id NOT IN (
+                    SELECT 
+                        restaurant_id
+                    FROM
+                        user_places
+                    WHERE
+                        user_id = :user_id
+                );
         ';
 
         $statement = $db->prepare($query);
+        $statement->bindValue(':user_id', $user->user_id, PDO::PARAM_INT);
         $statement->execute();
 
         if ($statement->rowCount() >= 1) {

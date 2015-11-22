@@ -8,8 +8,16 @@ require_once __DIR__ . '/../../../src/restaurant/restaurant.php';
 
 try{
     $db = $config->getDefaultDatabase()->open();
+    
+    $user = [
+        'user_id' => Request::REQUIRED
+    ];
 
-    $response = getAllRestaurants($db);
+    $request = new StandardRequest();
+    $user = $request->extract($user);
+    $user = arrayToJSONObject($user);
+
+    $response = getAllRestaurants($db, $user);
 } catch (Exception $ex) {
     $response = new ExceptionResponse($ex);
 }
