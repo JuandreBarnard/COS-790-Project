@@ -4,7 +4,8 @@
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>
     <color name="brown">#1C1107</color>
-    <color name="opacity_brown">#991C1107</color>
+    <color name="opacity_brown">#66451111</color>
+    <color name="opacity_light">#66403022</color>
     <color name="light_yellowish">#FFD9D0BA</color>
     <color name="bg_gradient_start">#ffffff</color>
     <color name="bg_gradient_end">#83651F</color>
