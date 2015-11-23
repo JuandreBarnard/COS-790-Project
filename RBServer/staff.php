@@ -1,3 +1,30 @@
+<?php
+    require_once __DIR__ . '/carbon/core.ini.php';
+    require_once __DIR__ . '/carbon/requests/requests.inc.php';
+    require_once __DIR__ . '/carbon/responses/responses.inc.php';
+    require_once __DIR__ . '/carbon/formats/formats.inc.php';
+    require_once __DIR__ . '/src/restaurant/restaurant.php';
+
+    $db = $config->getDefaultDatabase()->open();
+    
+    $restaurant_id = $_GET['restaurant_id'];
+    
+    $restaurantInfo = null;
+    
+    $response = getRestaurantByIdWithoutLogo($db, $restaurant_id);
+    
+    if($response->getType() == Response::SUCCESS){
+        $restaurantInfo = $response->getData();
+    }
+    
+    $deliveryMen = null;
+    
+    $response = getDeliveryMen($db, $restaurant_id);
+    
+    if($response->getType() == Response::SUCCESS){
+        $deliveryMen = $response->getData();
+    }
+?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -14,13 +41,13 @@
         <nav class="navbar navbar-default">
             <div class="container-fluid">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="#">Restaurant Buddy | {Restaurant Name}</a>
+                    <a class="navbar-brand" href="#">Restaurant Buddy | <?php echo $restaurantInfo['restaurantName'] ?></a>
                 </div>
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="index.php">Deliveries <span class="sr-only">(current)</span></a></li>
-                        <li><a href="restaurant.php">Restaurant Management</a></li>
-                        <li class="active"><a href="staff.php">Staff</a></li>
+                        <li><a href="index.php?restaurant_id=<?php echo $restaurant_id ?>">Deliveries <span class="sr-only">(current)</span></a></li>
+                        <li><a href="restaurant.php?restaurant_id=<?php echo $restaurant_id ?>">Restaurant Management</a></li>
+                        <li class="active"><a href="#">Staff</a></li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Profile <span class="caret"></span></a>
                             <ul class="dropdown-menu">
@@ -44,28 +71,25 @@
                         
                     </th>
                 </tr>
+                <?php
+                    if($deliveryMen != null){
+                        foreach($deliveryMen as $deliveryMan){
+                ?>
                 <tr>
                     <td>
-                        Ruan Botes
+                        <?php echo $deliveryMan['fullname'] ?>
                     </td>
                     <td>
-                        ruanbotes13@gmail.com
+                        <?php echo $deliveryMan['email'] ?>
                     </td>
                     <td>
-                        <button class="btn btn-danger btn-xs">delete</button>
+                        <button class="btn btn-danger btn-xs" onclick="deleteDeliveryMan(<?php echo $deliveryMan['id'] ?>, <?php echo $restaurant_id ?>)">delete</button>
                     </td>
                 </tr>
-                <tr>
-                    <td>
-                        Juandre Barnard
-                    </td>
-                    <td>
-                        jb@gmail.com
-                    </td>
-                    <td>
-                        <button class="btn btn-danger btn-xs">delete</button>
-                    </td>
-                </tr>
+                <?php
+                        }
+                    }
+                ?>
             </table>
             <div class="form-group">
                 <label for="fullname">Fullname:</label>
@@ -84,7 +108,7 @@
                 <input type="text" class="form-control" id="gcmregid" placeholder="">
             </div>
             <div class="form-group text-center">
-                <button class="btn btn-primary col-xs-6 col-xs-offset-3">add delivery man</button>
+                <button class="btn btn-primary col-xs-6 col-xs-offset-3" onclick="addDeliveryMan(<?php echo $restaurant_id ?>)">add delivery man</button>
             </div>
         </div>
     </body>

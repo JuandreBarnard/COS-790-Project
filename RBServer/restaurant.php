@@ -1,3 +1,22 @@
+<?php
+    require_once __DIR__ . '/carbon/core.ini.php';
+    require_once __DIR__ . '/carbon/requests/requests.inc.php';
+    require_once __DIR__ . '/carbon/responses/responses.inc.php';
+    require_once __DIR__ . '/carbon/formats/formats.inc.php';
+    require_once __DIR__ . '/src/restaurant/restaurant.php';
+
+    $db = $config->getDefaultDatabase()->open();
+    
+    $restaurant_id = $_GET['restaurant_id'];
+    
+    $restaurantInfo = null;
+    
+    $response = getRestaurantByIdWithoutLogo($db, $restaurant_id);
+    
+    if($response->getType() == Response::SUCCESS){
+        $restaurantInfo = $response->getData();
+    }
+?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -14,13 +33,13 @@
         <nav class="navbar navbar-default">
             <div class="container-fluid">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="#">Restaurant Buddy | {Restaurant Name}</a>
+                    <a class="navbar-brand" href="#">Restaurant Buddy | <?php echo $restaurantInfo['restaurantName'] ?></a>
                 </div>
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="index.php">Deliveries <span class="sr-only">(current)</span></a></li>
+                        <li><a href="index.php?restaurant_id=<?php echo $restaurant_id ?>">Deliveries <span class="sr-only">(current)</span></a></li>
                         <li class="active"><a href="#">Restaurant Management</a></li>
-                        <li><a href="staff.php">Staff</a></li>
+                        <li><a href="staff.php?restaurant_id=<?php echo $restaurant_id ?>">Staff</a></li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Profile <span class="caret"></span></a>
                             <ul class="dropdown-menu">
@@ -34,26 +53,26 @@
         <div class="col-xs-6 col-xs-offset-3">
             <div class="form-group">
                 <label for="restaurantName">Restaurant Name:</label>
-                <input type="text" class="form-control" id="restaurantName" placeholder="">
+                <input type="text" class="form-control" id="restaurantName" placeholder="" value="<?php echo $restaurantInfo['restaurantName'] ?>">
             </div>
             <div class="form-group">
                 <label for="restaurantDesc">Restaurant Description:</label>
-                <textarea type="text" class="form-control" id="restaurantDesc" placeholder=""></textarea>
+                <textarea type="text" class="form-control" id="restaurantDesc" placeholder=""><?php echo $restaurantInfo['restaurantDescription'] ?></textarea>
             </div>
             <div class="form-group">
                 <label for="restaurantStreet">Adress:</label>
-                <input type="text" class="form-control" id="restaurantStreet" placeholder="Street">
-                <input type="text" class="form-control" id="restaurantCity" placeholder="City">
-                <input type="text" class="form-control" id="restaurantProvince" placeholder="Province">
-                <input type="text" class="form-control" id="restaurantCountry" placeholder="Country">
+                <input type="text" class="form-control" id="restaurantStreet" placeholder="Street" value="<?php echo $restaurantInfo['restaurantStreet'] ?>">
+                <input type="text" class="form-control" id="restaurantCity" placeholder="City" value="<?php echo $restaurantInfo['restaurantCity'] ?>">
+                <input type="text" class="form-control" id="restaurantProvince" placeholder="Province" value="<?php echo $restaurantInfo['restaurantProvince'] ?>">
+                <input type="text" class="form-control" id="restaurantCountry" placeholder="Country" value="<?php echo $restaurantInfo['restaurantCountry'] ?>">
             </div>
             <div class="form-group col-xs-6">
                 <label for="lattitude">Lattitude:</label>
-                <input type="text" class="form-control" id="lattitude" placeholder="e.g. 25.000">
+                <input type="text" class="form-control" id="lattitude" placeholder="e.g. 25.000" value="<?php echo $restaurantInfo['lattitude'] ?>">
             </div>
             <div class="form-group col-xs-6">
                 <label for="longitude">Longitude:</label>
-                <input type="text" class="form-control" id="longitude" placeholder="e.g. 25.000">
+                <input type="text" class="form-control" id="longitude" placeholder="e.g. 25.000" value="<?php echo $restaurantInfo['longitude'] ?>">
             </div>
             <div class="form-group">
                 <div class="col-xs-9">
@@ -65,7 +84,7 @@
                 </div>
             </div>
             <div class="form-group text-center">
-                <button class="btn btn-primary col-xs-6 col-xs-offset-3" style="margin-top: 30px">submit restaurant changes</button>
+                <button class="btn btn-primary col-xs-6 col-xs-offset-3" style="margin-top: 30px" onclick="updateRestaurant(<?php echo $restaurant_id ?>)">submit restaurant changes</button>
             </div>
         </div>
     </body>

@@ -1,3 +1,38 @@
+<?php
+    require_once __DIR__ . '/carbon/core.ini.php';
+    require_once __DIR__ . '/carbon/requests/requests.inc.php';
+    require_once __DIR__ . '/carbon/responses/responses.inc.php';
+    require_once __DIR__ . '/carbon/formats/formats.inc.php';
+    require_once __DIR__ . '/src/restaurant/restaurant.php';
+
+    $db = $config->getDefaultDatabase()->open();
+    
+    $restaurant_id = $_GET['restaurant_id'];
+    
+    $deliveries = null;
+    
+    $response = getDeliveries($db, $restaurant_id);
+    
+    if($response->getType() == Response::SUCCESS){
+        $deliveries = $response->getData();
+    }
+    
+    $deliveryMen = null;
+    
+    $response = getDeliveryMen($db, $restaurant_id);
+    
+    if($response->getType() == Response::SUCCESS){
+        $deliveryMen = $response->getData();
+    }
+    
+    $restaurantInfo = null;
+    
+    $response = getRestaurantByIdWithoutLogo($db, $restaurant_id);
+    
+    if($response->getType() == Response::SUCCESS){
+        $restaurantInfo = $response->getData();
+    }
+?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -14,13 +49,13 @@
         <nav class="navbar navbar-default">
             <div class="container-fluid">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="#">Restaurant Buddy | {Restaurant Name}</a>
+                    <a class="navbar-brand" href="#">Restaurant Buddy | <?php echo $restaurantInfo['restaurantName'] ?></a>
                 </div>
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav navbar-right">
                         <li class="active"><a href="#">Deliveries <span class="sr-only">(current)</span></a></li>
-                        <li><a href="restaurant.php">Restaurant Management</a></li>
-                        <li><a href="staff.php">Staff</a></li>
+                        <li><a href="restaurant.php?restaurant_id=<?php echo $restaurant_id ?>">Restaurant Management</a></li>
+                        <li><a href="staff.php?restaurant_id=<?php echo $restaurant_id ?>">Staff</a></li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Profile <span class="caret"></span></a>
                             <ul class="dropdown-menu">
@@ -35,7 +70,16 @@
             <div class="form-group">
                 <label for="deliveryMan">Delivery Man:</label>
                 <select class="form-control" id="deliveryMan">
-                    <option>Please select</option>
+                    <option value="0">Please select</option>
+                    <?php
+                        if($deliveryMen != null){
+                            foreach($deliveryMen as $deliveryMan){
+                    ?>
+                    <option value="<?php echo $deliveryMan['id'] ?>"><?php echo $deliveryMan['fullname'] ?></option>
+                    <?php
+                            }
+                        }
+                    ?>
                 </select>
             </div>
             <div class="form-group">
@@ -51,7 +95,7 @@
                 <input type="text" class="form-control" id="longitude" placeholder="e.g. 25.000">
             </div>
             <div class="form-group text-center">
-                <button class="btn btn-primary col-xs-6 col-xs-offset-3" style="margin-bottom: 30px">submit delivery</button><br>
+                <button id="submit-button" class="btn btn-primary col-xs-6 col-xs-offset-3" style="margin-bottom: 30px" onclick="submitDelivery()" id="submit-button">submit delivery</button><br>
             </div>
         </div>
         <div class="col-xs-6 col-xs-offset-3">
@@ -70,34 +114,28 @@
                         
                     </th>
                 </tr>
+                <?php                
+                    if($deliveries != null){
+                        foreach ($deliveries as $delivery) {
+                ?>
                 <tr>
                     <td>
-                        Ruan Botes
+                        <?php echo $delivery['fullname'] ?>
                     </td>
                     <td>
-                        ab123
+                        <?php echo $delivery['order_number'] ?>
                     </td>
                     <td>
-                        lat long
+                        <?php echo $delivery['lattitude'] . ", " . $delivery['longitude'] ?>
                     </td>
                     <td>
-                        <button class="btn btn-danger btn-xs">delivered</button>
+                        <button class="btn btn-danger btn-xs" onclick="deleteDelivery(<?php echo $delivery['id'] ?>)">delivered</button>
                     </td>
                 </tr>
-                <tr>
-                    <td>
-                        Ruan Botes
-                    </td>
-                    <td>
-                        ab345
-                    </td>
-                    <td>
-                        lat long
-                    </td>
-                    <td>
-                        <button class="btn btn-danger btn-xs">delivered</button>
-                    </td>
-                </tr>
+                <?php
+                        }
+                    }
+                ?>
             </table>
         </div>
     </body>
