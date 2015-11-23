@@ -99,6 +99,10 @@
                 <label for="email">Email:</label>
                 <input type="text" class="form-control" id="email" placeholder="">
             </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" class="form-control" id="password" placeholder="">
+            </div>
             <div class="form-group text-center">
                 <button class="btn btn-primary col-xs-6 col-xs-offset-3" onclick="addDeliveryMan(<?php echo $restaurant_id ?>)">add delivery man</button>
             </div>

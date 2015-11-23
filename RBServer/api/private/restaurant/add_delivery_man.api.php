@@ -13,7 +13,6 @@ try{
         'fullname' => Request::REQUIRED,
         'email' => Request::REQUIRED,
         'password' => Request::REQUIRED,
-        'gcmregid' => Request::REQUIRED,
         'restaurant_id' => Request::REQUIRED
     ];
 

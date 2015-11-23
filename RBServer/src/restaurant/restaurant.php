@@ -492,7 +492,6 @@ function addUser(PDO $db, $user){
                         email,
                         password,
                         type,
-                        gcmregid,
                         created,
                         updated
                     )
@@ -501,7 +500,6 @@ function addUser(PDO $db, $user){
                     :email,
                     password(:password),
                     3,
-                    :gcmregid,
                     NOW(),
                     NOW()
                 )' ;
@@ -511,7 +509,6 @@ function addUser(PDO $db, $user){
         $statement->bindValue(':fullname', $user->fullname, PDO::PARAM_STR);
         $statement->bindValue(':email', $user->email, PDO::PARAM_STR);
         $statement->bindValue(':password', $user->password, PDO::PARAM_STR);
-        $statement->bindValue(':gcmregid', $user->gcmregid, PDO::PARAM_STR);
         $statement->execute();
 
         if ($statement->rowCount() >= 1) {

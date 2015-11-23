@@ -58,12 +58,10 @@ function addDeliveryMan(restaurant_id){
     fullname = $("#fullname").val();
     email = $("#email").val();
     password = $("#password").val();
-    gcmregid = $("#gcmregid").val();
     $.post("../api/private/restaurant/add_delivery_man.api.php", { 
         fullname: fullname,
         email: email,
         password: password,
-        gcmregid: gcmregid,
         restaurant_id: restaurant_id
     })
     .done(function( data ) {
