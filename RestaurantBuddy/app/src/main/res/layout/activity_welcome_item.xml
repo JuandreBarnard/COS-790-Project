@@ -13,7 +13,8 @@
         android:layout_height="wrap_content"
         android:text="@+id/id"
         android:textColor="@color/light_yellowish"
-        android:textSize="20sp" >
+        android:textSize="20sp"
+        android:visibility="gone">
     </TextView>
 
     <ImageView

@@ -69,10 +69,6 @@ public class WelcomeActivity extends Activity implements GooglePlayServicesClien
         }
 
         new AttemptRestSearch().execute();
-
-
-
-
   }
     private String TAG = this.getClass().getSimpleName();
     @Override
@@ -263,7 +259,7 @@ public class WelcomeActivity extends Activity implements GooglePlayServicesClien
                     }
 
                     Log.v("INFO", "Selected restaurant: " + selected_restaurant.toString());
-                    details_view(selected_restaurant);
+                    details_view_2(selected_restaurant);
 
                 }
             });
@@ -280,7 +276,7 @@ public class WelcomeActivity extends Activity implements GooglePlayServicesClien
     }
 
     // Details activity
-    public void details_view(JSONObject selected_item) {
+    public void details_view_2(JSONObject selected_item) {
         Intent intent = new Intent(this, DetailsActivity2.class);
         intent.putExtra(SELECTED_RESTAURANT, selected_item.toString());
         intent.putExtra(LoginActivity.ID, ID);
