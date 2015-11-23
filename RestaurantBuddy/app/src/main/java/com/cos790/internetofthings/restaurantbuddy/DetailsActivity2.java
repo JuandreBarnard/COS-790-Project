@@ -53,11 +53,12 @@ public class DetailsActivity2 extends ActionBarActivity {
             String str = json.getString("restaurantStreet");
             String name = json.getString("restaurantName");
             String prv = json.getString("restaurantProvince");
+            String lat = json.getString("lattitude");
+            String lng = json.getString("longitude");
 
 
 //            String logo = json.getString("logo");
-//            String lattitude = json.getString("lattitude");
-//            String longitude = json.getString("longitude");
+
 
             TextView title = (TextView) findViewById(R.id.title);
             title.setText(name);
@@ -73,6 +74,12 @@ public class DetailsActivity2 extends ActionBarActivity {
 
             TextView province = (TextView) findViewById(R.id.province);
             province.setText("Province: " + prv);
+
+            TextView latitude = (TextView) findViewById(R.id.latitude);
+            latitude.setText("Latitude: " + lat);
+
+            TextView longitude = (TextView) findViewById(R.id.longitude);
+            province.setText("Longitude: " + lng);
 
 
         } catch (JSONException e) {
