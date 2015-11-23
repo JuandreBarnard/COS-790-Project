@@ -88,11 +88,11 @@
             </div>
             <div class="form-group col-xs-6">
                 <label for="lattitude">Lattitude:</label>
-                <input type="text" class="form-control" id="lattitude" placeholder="e.g. 25.000">
+                <input type="text" class="form-control" id="lattitude" placeholder="e.g. 25.000" value="-25.7288130">
             </div>
             <div class="form-group col-xs-6">
                 <label for="longitude">Longitude:</label>
-                <input type="text" class="form-control" id="longitude" placeholder="e.g. 25.000">
+                <input type="text" class="form-control" id="longitude" placeholder="e.g. 25.000" value="28.2462700">
             </div>
             <div class="form-group text-center">
                 <button id="submit-button" class="btn btn-primary col-xs-6 col-xs-offset-3" style="margin-bottom: 30px" onclick="submitDelivery()" id="submit-button">submit delivery</button><br>

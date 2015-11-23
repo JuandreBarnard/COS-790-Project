@@ -68,11 +68,11 @@
             </div>
             <div class="form-group col-xs-6">
                 <label for="lattitude">Lattitude:</label>
-                <input type="text" class="form-control" id="lattitude" placeholder="e.g. 25.000" value="<?php echo $restaurantInfo['lattitude'] ?>">
+                <input type="text" class="form-control" id="lattitude" placeholder="e.g. 25.000" value=-25.7288130">
             </div>
             <div class="form-group col-xs-6">
                 <label for="longitude">Longitude:</label>
-                <input type="text" class="form-control" id="longitude" placeholder="e.g. 25.000" value="<?php echo $restaurantInfo['longitude'] ?>">
+                <input type="text" class="form-control" id="longitude" placeholder="e.g. 25.000" value=28.2462700">
             </div>
             <div class="form-group">
                 <div class="col-xs-9">
