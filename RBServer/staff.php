@@ -31,11 +31,11 @@
         <title>Admin | Staff</title>
         <meta charset='UTF-8' />
         <meta name='viewport' content='width=device-width, initial-scale=1' />
-        <link rel='stylesheet' type='text/css' href='/lib/bootstrap.min.css' />
-        <link type='text/css' rel='stylesheet' href='/lib/font-awesome.min.css' />
-        <script src="/lib/jquery.min.js"></script>
-        <script src="/lib/bootstrap.min.js"></script>
-        <script src="/js/restaurant.js"></script>
+        <link rel='stylesheet' type='text/css' href='/RBServer/lib/bootstrap.min.css' />
+        <link type='text/css' rel='stylesheet' href='/RBServer/lib/font-awesome.min.css' />
+        <script src="/RBServer/lib/jquery.min.js"></script>
+        <script src="/RBServer/lib/bootstrap.min.js"></script>
+        <script src="/RBServer/js/restaurant.js"></script>
     </head>
     <body>
         <nav class="navbar navbar-default">
