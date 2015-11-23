@@ -106,6 +106,7 @@ public class AddPlaceActivity extends ActionBarActivity {
                     List<String> ids = new LinkedList<>();
                     List<String> images = new LinkedList<>();
                     List<String> values = new LinkedList<>();
+                    List<String> addresses = new LinkedList<>();
                     for(int i=0;i<data.length();i++)
                     {
 
@@ -119,6 +120,8 @@ public class AddPlaceActivity extends ActionBarActivity {
 
                         values.add(b.getString("restaurantName"));
 
+                        addresses.add(b.getString("restaurantCity") + ", " + b.getString("restaurantStreet"));
+
                         /*String id = b.getString("id");
                         Log.i(".......",id);
                         //JSONObject latitude = b.getJSONObject("latitude");
@@ -129,8 +132,9 @@ public class AddPlaceActivity extends ActionBarActivity {
                     String[] id = ids.toArray(new String[ids.size()]);
                     String[] a =  values.toArray(new String[values.size()]);
                     String[] img =  images.toArray(new String[images.size()]);
+                    String[] ad = addresses.toArray(new String[addresses.size()]);
 
-                    adapter = new CustomAdapter(applicationContext, id, a, img);
+                    adapter = new CustomAdapter(applicationContext, id, a, img, ad);
 
 
                 } else {

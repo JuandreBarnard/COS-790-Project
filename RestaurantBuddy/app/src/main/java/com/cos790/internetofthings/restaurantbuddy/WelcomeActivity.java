@@ -176,6 +176,7 @@ public class WelcomeActivity extends Activity implements GooglePlayServicesClien
                     List<String> values = new LinkedList<>();
                     List<String> lat = new LinkedList<>();
                     List<String> lon = new LinkedList<>();
+                    List<String> addresses = new LinkedList<>();
                     for(int i=0;i<data.length();i++)
                     {
 
@@ -189,6 +190,9 @@ public class WelcomeActivity extends Activity implements GooglePlayServicesClien
                         values.add(b.getString("restaurantName"));
                         lat.add(b.getString("lattitude"));
                         lon.add(b.getString("longitude"));
+
+                        addresses.add(b.getString("restaurantCity") + ", " + b.getString("restaurantStreet"));
+
 
                     }
                     //listofurls = image_urls.toArray(new String[image_urls.size()]);
@@ -207,8 +211,9 @@ public class WelcomeActivity extends Activity implements GooglePlayServicesClien
                         id = ids.toArray(new String[ids.size()]);
                         String[] a = values.toArray(new String[values.size()]);
                         String[] img = images.toArray(new String[images.size()]);
+                        String[] ad = addresses.toArray(new String[addresses.size()]);
 
-                        adapter = new CustomAdapter(applicationContext, id, a, img);
+                        adapter = new CustomAdapter(applicationContext, id, a, img, ad);
 
 
 
