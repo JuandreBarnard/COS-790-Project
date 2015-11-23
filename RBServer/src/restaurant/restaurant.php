@@ -101,7 +101,7 @@ function getUserPlaces($db, $user){
             
             for($i = 0; $i < count($data); $i++){
                 file_put_contents('../../../tmp/' . $data[$i]['id'] . '.jpg', $data[$i]['logo']);
-                $data[$i]['logo'] = $_SERVER['HTTP_HOST'] . '/tmp/' . $data[$i]['id'] . '.jpg';
+                $data[$i]['logo'] = $_SERVER['HTTP_HOST'] . '/RBServer/tmp/' . $data[$i]['id'] . '.jpg';
             }
             
             return new SuccessResponse('User has restaurants.', $data);
@@ -148,7 +148,7 @@ function getAllRestaurants($db, $user){
             $data = $statement->fetchAll(PDO::FETCH_ASSOC);
             for($i = 0; $i < count($data); $i++){
                 file_put_contents('../../../tmp/' . $data[$i]['id'] . '.jpg', $data[$i]['logo']);
-                $data[$i]['logo'] = $_SERVER['HTTP_HOST'] . '/tmp/' . $data[$i]['id'] . '.jpg';
+                $data[$i]['logo'] = $_SERVER['HTTP_HOST'] . '/RBServer/tmp/' . $data[$i]['id'] . '.jpg';
             }
             return new SuccessResponse('Restaurants exists.', $data);
         }
