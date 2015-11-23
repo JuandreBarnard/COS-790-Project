@@ -38,26 +38,49 @@ public class DetailsActivity2 extends ActionBarActivity {
         ID = intent.getStringExtra(LoginActivity.ID);
 
         String selected_restaurant_json = intent.getStringExtra(WelcomeActivity.SELECTED_RESTAURANT);
-
         try {
 
             String result = selected_restaurant_json.replaceAll("\"","\\\"");
             JSONObject json = new JSONObject(result);
 
-            int id = Integer.parseInt(json.getString("id"));
+            Log.v("INFO", "HEERRREEEE");
+
+            String id = json.getString("id");
             restaurant_id = json.getString("id");
-            String logo = json.getString("logo");
-            String lattitude = json.getString("id");
-            String longitude = json.getString("logo");
-            String description = json.getString("restaurantDescription");
-            String country = json.getString("restaurantCountry");
-            String city = json.getString("restaurantCity");
-            String street = json.getString("restaurantStreet");
+
+            String cnty = json.getString("restaurantCountry");
+            String cty = json.getString("restaurantCity");
+            String str = json.getString("restaurantStreet");
             String name = json.getString("restaurantName");
-            String province = json.getString("restaurantProvince");
+            String prv = json.getString("restaurantProvince");
+            String lat = json.getString("lattitude");
+            String lng = json.getString("longitude");
+
+
+//            String logo = json.getString("logo");
+
 
             TextView title = (TextView) findViewById(R.id.title);
             title.setText(name);
+
+            TextView city = (TextView) findViewById(R.id.city);
+            city.setText("City: " + cty);
+
+            TextView street = (TextView) findViewById(R.id.street);
+            street.setText("Street: " + str);
+
+            TextView country = (TextView) findViewById(R.id.country);
+            country.setText("Country: " + cnty);
+
+            TextView province = (TextView) findViewById(R.id.province);
+            province.setText("Province: " + prv);
+
+            TextView latitude = (TextView) findViewById(R.id.latitude);
+            latitude.setText("Latitude: " + lat);
+
+            TextView longitude = (TextView) findViewById(R.id.longitude);
+            province.setText("Longitude: " + lng);
+
 
         } catch (JSONException e) {
             e.printStackTrace();

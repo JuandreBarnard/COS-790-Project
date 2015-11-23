@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +29,7 @@ public class Delivery_man extends Activity implements GooglePlayServicesClient.C
     private TextView txtLastKnownLoc;
     private EditText etLocationInterval;
     private TextView txtLocationRequest;
+    private Button b14;
 
     private LocationClient locationclient;
     private LocationRequest locationrequest;
@@ -40,12 +42,20 @@ public class Delivery_man extends Activity implements GooglePlayServicesClient.C
         setContentView(R.layout.activity_delivery_man);
 
 
+        Intent intent = getIntent();
+        String ID = intent.getStringExtra(LoginActivity.ID);
+
         txtConnectionStatus = (TextView) findViewById(R.id.txtConnectionStatus);
         txtLastKnownLoc = (TextView) findViewById(R.id.txtLastKnownLoc);
         etLocationInterval = (EditText) findViewById(R.id.etLocationInterval);
         txtLocationRequest = (TextView) findViewById(R.id.txtLocationRequest);
 
-        mIntentService = new Intent(this,LocationService.class);
+        b14 = (Button) findViewById(R.id.btnRequestLocationIntent);
+
+
+        Intent i = new Intent(this,LocationService.class);
+        i.putExtra(LoginActivity.ID, ID);
+        mIntentService = i;
         mPendingIntent = PendingIntent.getService(this, 1, mIntentService, 0);
 
         int resp =GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
@@ -58,6 +68,16 @@ public class Delivery_man extends Activity implements GooglePlayServicesClient.C
 
         }
 
+
+    }
+
+    @Override
+    public void onRestart() {
+        super.onRestart();
+        b14.setText("Stop");
+        //Refresh your stuff here
+        //list = (ListView) findViewById(R.id.list);
+        //new AttemptRestSearch().execute();
     }
 
     public void buttonClicked(View v){
@@ -84,11 +104,12 @@ public class Delivery_man extends Activity implements GooglePlayServicesClient.C
 
             }
         }
+        /*Edit here*/
         if(v.getId() == R.id.btnRequestLocationIntent){
             if(((Button)v).getText().equals("Start")){
 
                 locationrequest = LocationRequest.create();
-                locationrequest.setInterval(100);
+                locationrequest.setInterval(30000);
                 locationclient.requestLocationUpdates(locationrequest, mPendingIntent);
 
                 ((Button) v).setText("Stop");

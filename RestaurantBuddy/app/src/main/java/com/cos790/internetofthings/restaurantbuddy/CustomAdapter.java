@@ -23,12 +23,14 @@ public class CustomAdapter extends ArrayAdapter<String> {
     private final String[] ids;
     private final String[] values;
     private final String[] images;
+    private final String[] addresses;
 
-    public CustomAdapter(Context context, String[] ids, String[] values, String[] images) {
+    public CustomAdapter(Context context, String[] ids, String[] values, String[] images, String[] addresses) {
         super(context, R.layout.activity_welcome_item, values);
         this.context = context;
         this.ids = ids;
         this.values = values;
+        this.addresses = addresses;
         this.images = images;
     }
 
@@ -42,6 +44,9 @@ public class CustomAdapter extends ArrayAdapter<String> {
 
         TextView label = (TextView) rowView.findViewById(R.id.label);
         label.setText(values[position]);
+
+        TextView address = (TextView) rowView.findViewById(R.id.address);
+        address.setText(addresses[position]);
 
         ImageView imageView = (ImageView) rowView.findViewById(R.id.icon);
         new ImageLoadTask(images[position],imageView).execute();

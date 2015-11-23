@@ -25,10 +25,10 @@
     <string name="GPSAlertDialogTitle">GPS is setting</string>
     <string name="GPSAlertDialogMessage">GPS is not enabled. Do you want to go to setting menu</string>
     <string name="cancel">Cancel</string>
-    <string name="title_activity_add_place">AddPlaceActivity</string>
+    <string name="title_activity_add_place">Add Place</string>
     <string name="hello_world">Hello world!</string>
-    <string name="title_activity_details">DetailsActivity</string>
-    <string name="title_activity_details2">DetailsActivity2</string>
-    <string name="title_activity_track_delivery">TrackDelivery</string>
-    <string name="title_activity_gps">GPSActivity</string>
+    <string name="title_activity_details">Details</string>
+    <string name="title_activity_details2">Details</string>
+    <string name="title_activity_track_delivery">Track Delivery</string>
+    <string name="title_activity_gps">GPS</string>
 </resources>
