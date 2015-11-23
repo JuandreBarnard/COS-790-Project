@@ -48,6 +48,12 @@ public class AddPlaceActivity extends ActionBarActivity {
         list = (ListView) findViewById(R.id.list);
         new AttemptRestSearch().execute();
     }
+    public void onRestart() {
+        super.onRestart();
+        //Refresh your stuff here
+        list = (ListView) findViewById(R.id.list);
+        new AttemptRestSearch().execute();
+    }
 
     class AttemptRestSearch extends AsyncTask<String, String, String> {
         /**
@@ -74,7 +80,7 @@ public class AddPlaceActivity extends ActionBarActivity {
             try {
                 // Building Parameters
                 List<NameValuePair> params = new ArrayList<>();
-                params.add(new BasicNameValuePair("id", ID));
+                params.add(new BasicNameValuePair("user_id", ID));
 
                 Log.d("request!", "starting");
                 // getting product details by making HTTP request
@@ -126,7 +132,7 @@ public class AddPlaceActivity extends ActionBarActivity {
 
                     adapter = new CustomAdapter(applicationContext, id, a, img);
 
-                    return json.getString(TAG_SUCCESS);
+
                 } else {
                     Log.d("Login Failure!", json.getString(TAG_MESSAGE));
                     return json.getString(TAG_MESSAGE);
@@ -187,6 +193,7 @@ public class AddPlaceActivity extends ActionBarActivity {
         intent.putExtra(SELECTED_RESTAURANT, selected_item.toString());
         intent.putExtra(LoginActivity.ID, ID);
         startActivity(intent);
+
     }
 
 }

@@ -47,6 +47,13 @@ public class WelcomeActivity extends Activity {
       list = (ListView) findViewById(R.id.list);
       new AttemptRestSearch().execute();
   }
+    @Override
+    public void onRestart() {
+        super.onRestart();
+        //Refresh your stuff here
+        list = (ListView) findViewById(R.id.list);
+        new AttemptRestSearch().execute();
+    }
 
   class AttemptRestSearch extends AsyncTask<String, String, String> {
       /**
@@ -80,7 +87,7 @@ public class WelcomeActivity extends Activity {
 
                 // TODO: change back to user_places
                 JSONObject json = jsonParser.makeHttpRequest(
-                        ApplicationConstants.APP_SERVER_all_restaurant, "POST", params);
+                        ApplicationConstants.APP_SERVER_user_places, "POST", params);
 
                 // check your log for json response
                 Log.d("List attempt", json.toString());
@@ -124,7 +131,7 @@ public class WelcomeActivity extends Activity {
                     String[] img =  images.toArray(new String[images.size()]);
                     adapter = new CustomAdapter(applicationContext, id, a, img);
 
-                    return json.getString(TAG_SUCCESS);
+                    //return null;
                 } else {
                     Log.d("Login Failure!", json.getString(TAG_MESSAGE));
                     return json.getString(TAG_MESSAGE);
@@ -185,6 +192,7 @@ public class WelcomeActivity extends Activity {
         Intent intent = new Intent(this, AddPlaceActivity.class);
         intent.putExtra(LoginActivity.ID, ID);
         startActivity(intent);
+
     }
 
     // Details activity

@@ -1,6 +1,8 @@
 package com.cos790.internetofthings.restaurantbuddy;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -8,12 +10,22 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class DetailsActivity2 extends ActionBarActivity {
 
+    private ProgressDialog pDialog;
+    JSONParser jsonParser = new JSONParser();
+    private static final String TAG_SUCCESS = "type";
+    private static final String TAG_MESSAGE = "message";
     private String ID;
     private String restaurant_id;
 
@@ -56,6 +68,7 @@ public class DetailsActivity2 extends ActionBarActivity {
     public void delete(View view) {
         // TODO: delete place from user list
         Log.v("INFO", "Delete button clicked!");
+        new AttemptDeletePlace().execute();
     }
 
     // Track delivery button click
@@ -64,5 +77,58 @@ public class DetailsActivity2 extends ActionBarActivity {
         Intent intent = new Intent(this, TrackDeliveryActivity.class);
         intent.putExtra(LoginActivity.ID, ID);
         startActivity(intent);
+    }
+
+    class AttemptDeletePlace extends AsyncTask<String, String, String> {
+        boolean failure = false;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            pDialog = new ProgressDialog(DetailsActivity2.this);
+            pDialog.setMessage("Attempting to delete place...");
+            pDialog.setIndeterminate(false);
+            pDialog.setCancelable(true);
+            pDialog.show();
+        }
+
+        @Override
+        protected String doInBackground(String... args) {
+            String success;
+
+            try {
+                List<NameValuePair> params = new ArrayList<NameValuePair>();
+                params.add(new BasicNameValuePair("user_id", ID));
+                params.add(new BasicNameValuePair("restaurant_id", restaurant_id));
+
+                Log.d("request!", "starting");
+                JSONObject json = jsonParser.makeHttpRequest(
+                        ApplicationConstants.APP_SERVER_delete_user_place, "POST", params);
+
+                success = json.getString(TAG_SUCCESS);
+                if (success.equals("SUCCESS")) {
+                    Intent intent = new Intent(getBaseContext(), WelcomeActivity.class);
+                    intent.putExtra(LoginActivity.ID, ID);
+                    Log.v("INFO", "Place deleted successfully");
+                    startActivity(intent);
+                    finish();
+
+                }else{
+                    Log.v("INFO", "Place could not be deleted!");
+                    return json.getString(TAG_MESSAGE);
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+
+        protected void onPostExecute(String file_url) {
+            pDialog.dismiss();
+            if (file_url != null){
+                Toast.makeText(DetailsActivity2.this, file_url, Toast.LENGTH_LONG).show();
+            }
+        }
     }
 }

@@ -99,6 +99,7 @@ public class DetailsActivity extends ActionBarActivity {
                     intent.putExtra(LoginActivity.ID, ID);
                     Log.v("INFO", "Place added successfully");
                     startActivity(intent);
+                    finish();
 
                 }else{
                     Log.v("INFO", "Place could not be added!");
