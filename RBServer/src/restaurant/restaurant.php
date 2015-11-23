@@ -223,13 +223,11 @@ function submitGPS(PDO $db, $deliveryInfo){
                     lattitude = :lattitude,
                     longitude = :longitude
                 WHERE 
-                    delivery_man_id = :delivery_man_id AND
-                    order_number = :order_number' ;
+                    delivery_man_id = :delivery_man_id' ;
 
     try {
         $statement = $db->prepare($query);
         $statement->bindValue(':delivery_man_id', $deliveryInfo->delivery_man_id, PDO::PARAM_INT);
-        $statement->bindValue(':order_number', $deliveryInfo->order_number, PDO::PARAM_STR);
         $statement->bindValue(':lattitude', $deliveryInfo->lattitude, PDO::PARAM_STR);
         $statement->bindValue(':longitude', $deliveryInfo->longitude, PDO::PARAM_STR);
         $statement->execute();

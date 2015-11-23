@@ -11,7 +11,6 @@ try{
     
     $deliveryInfo = [
         'delivery_man_id' => Request::REQUIRED,
-        'order_number' => Request::REQUIRED,
         'lattitude' => Request::REQUIRED,
         'longitude' => Request::REQUIRED
     ];
