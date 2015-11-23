@@ -250,12 +250,10 @@ function getGPS(PDO $db, $deliveryInfo){
                 FROM
                     deliveries
                 WHERE 
-                    delivery_man_id = :delivery_man_id AND
                     order_number = :order_number' ;
 
     try {
         $statement = $db->prepare($query);
-        $statement->bindValue(':delivery_man_id', $deliveryInfo->delivery_man_id, PDO::PARAM_INT);
         $statement->bindValue(':order_number', $deliveryInfo->order_number, PDO::PARAM_STR);
         $statement->execute();
 
